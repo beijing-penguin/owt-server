@@ -41,7 +41,6 @@ router.get('/rooms/:room/streams/:stream', streamsResource.get);
 router.patch('/rooms/:room/streams/:stream', streamsResource.patch);
 router.delete('/rooms/:room/streams/:stream', streamsResource.delete);
 router.post('/rooms/:room/streaming-ins', streamsResource.addStreamingIn);//FIXME: Validation on body.type === 'streaming' is needed.
-router.post('/rooms/:room/draw-text', streamsResource.drawText);
 router.delete('/rooms/:room/streaming-ins/:stream', streamsResource.delete);
 
 //External streaming-out management
@@ -69,6 +68,6 @@ router.delete('/rooms/:room/analytics/:id', analyticsResource.delete);
 
 //Create token.
 router.post('/rooms/:room/tokens', tokensResource.create);
-
+router.post('/rooms/:room/draw-text', tokensResource.drawText);
 
 module.exports = router

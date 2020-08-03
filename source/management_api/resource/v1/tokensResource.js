@@ -141,3 +141,33 @@ exports.create = function (req, res, next) {
     });
 };
 
+
+exports.create = function (req, res, next) {
+    var authData = req.authData;
+    authData.user = (req.authData.user || (req.body && req.body.user));
+    authData.role = (req.authData.role || (req.body && req.body.role));
+    var origin = ((req.body && req.body.preference) || {isp: 'isp', region: 'region'});
+
+    generateToken(req.params.room, authData, origin, function (tokenS) {
+        if (tokenS === undefined) {
+            log.info('Name and role?');
+            return next(new e.BadRequestError('Name or role not valid'));
+        }
+        if (tokenS === 'error') {
+            log.info('RequestHandler does not respond');
+            return next(new e.CloudError('Failed to get portal'));
+        }
+        log.debug('Created token for room ', req.params.room, 'and service ', authData.service._id);
+        res.send(tokenS);
+    });
+};
+
+exports.drawText = function (req, res, next) {
+    var pub_req = req.body;
+    requestHandler.drawText(req.params.room, pub_req, function (result) {
+        if (result === 'error') {
+            return next(new e.CloudError('Operation failed'));
+        }
+        res.send(result);
+    });
+};
