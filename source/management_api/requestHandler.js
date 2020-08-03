@@ -201,6 +201,29 @@ exports.getStreamsInRoom = function (roomId, callback) {
     });
 };
 
+exports.drawText = function (roomId,req_body, callback) {
+  return validateId('Room ID', roomId)
+    .then((ok) => {
+      return getRoomController(roomId);
+    }).then((controller) => {
+      rpc.callRpc(controller, 'drawText', [roomId,req_body.textSpec,0], {callback: function (streams) {
+        log.debug('Got streams:', streams);
+        if (streams === 'timeout' || streams === 'error') {
+          callback('error');
+        } else {
+          callback(streams);
+        }
+      }});
+    }).catch((err) => {
+      log.info('getStreamsInRoom failed, reason:', err.message ? err.message : err);
+      if (err === 'Room is inactive') {
+        callback([]);
+      } else {
+        callback('error');
+      }
+    });
+};
+
 exports.addStreamingIn = function (roomId, pubReq, callback) {
   return validateId('Room ID', roomId)
     .then((ok) => {
