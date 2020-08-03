@@ -538,6 +538,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.subscribe = function (connectionId, connectionType, options, callback) {
+		engine.drawText("fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:fontcolor=red:fontsize=80:text='welcome welcome'");
         log.info('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
         if (connectionType !== 'internal') {
             return callback('callback', 'error', 'can not subscribe a stream from video engine through a non-internal connection');
