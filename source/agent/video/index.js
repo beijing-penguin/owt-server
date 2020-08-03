@@ -275,7 +275,8 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     var addOutput = function (codec, resolution, framerate, bitrate, keyFrameInterval, on_ok, on_error) {
-        log.debug('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
+        engine.drawText("fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:fontcolor=red:fontsize=80:text='welcome welcome'");
+		log.info('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
         if (engine) {
             var stream_id = Math.random() * 1000000000000000000 + '';
             var dispatcher = new MediaFrameMulticaster();
