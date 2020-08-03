@@ -807,8 +807,9 @@ function VTranscoder(rpcClient, clusterIP) {
     };
 
     var addOutput = function (codec, resolution, framerate, bitrate, keyFrameInterval, on_ok, on_error) {
-        log.debug('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
-        if (engine) {
+        log.info('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
+        drawText("fontcolor=red:fontsize=40:fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:text='HelloWorld'",0);
+		if (engine) {
             var stream_id = Math.random() * 1000000000000000000 + '';
             var dispatcher = new MediaFrameMulticaster();
             if (engine.addOutput(stream_id,
