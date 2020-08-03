@@ -2448,6 +2448,7 @@ var Conference = function (rpcClient, selfRpcId) {
   };
 
   that.drawText = function(streamId, textSpec, duration, callback) {
+	log.info("streamId=",streamId,",textSpec=",textSpec,",duration=",duration);
     if (roomController) {
       roomController.drawText(streamId, textSpec, duration);
       callback('callback', 'ok');
