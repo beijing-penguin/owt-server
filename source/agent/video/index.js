@@ -539,7 +539,6 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.subscribe = function (connectionId, connectionType, options, callback) {
-		engine.drawText("fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:fontcolor=red:fontsize=80:text='welcome welcome'");
         log.info('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
         if (connectionType !== 'internal') {
             return callback('callback', 'error', 'can not subscribe a stream from video engine through a non-internal connection');
@@ -970,7 +969,6 @@ function VTranscoder(rpcClient, clusterIP) {
 
     that.publish = function (stream_id, stream_type, options, callback) {
         log.info('publish, stream_id:', stream_id, 'stream_type:', stream_type, 'options:', options);
-		engine.drawText("fontcolor=red:fontsize=40:fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:text=HelloWorld");
         if (stream_type !== 'internal') {
             return callback('callback', 'error', 'can not publish a stream to video engine through a non-internal connection');
         }
@@ -1001,8 +999,6 @@ function VTranscoder(rpcClient, clusterIP) {
 
     that.subscribe = function (connectionId, connectionType, options, callback) {
         log.info('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
-		engine.drawText("fontcolor=red:fontsize=40:fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:text=HelloWorld");
-		that.drawText("fontcolor=red:fontsize=40:fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:text='HelloWorld'",0);
         if (connectionType !== 'internal') {
             return callback('callback', 'error', 'can not subscribe a stream from video engine through a non-internal connection');
         }
