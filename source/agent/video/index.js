@@ -538,7 +538,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.subscribe = function (connectionId, connectionType, options, callback) {
-        log.debug('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
+        log.info('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
         if (connectionType !== 'internal') {
             return callback('callback', 'error', 'can not subscribe a stream from video engine through a non-internal connection');
         }
@@ -559,7 +559,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.unsubscribe = function (connectionId) {
-        log.debug('unsubscribe, connectionId:', connectionId);
+        log.info('unsubscribe, connectionId:', connectionId);
         if (connections[connectionId] && connections[connectionId].videoFrom) {
             if (outputs[connections[connectionId].videoFrom]) {
                 outputs[connections[connectionId].videoFrom].dispatcher.removeDestination('video', connections[connectionId].connection.receiver());
@@ -570,7 +570,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.linkup = function (connectionId, audio_stream_id, video_stream_id, callback) {
-        log.debug('linkup, connectionId:', connectionId, 'video_stream_id:', video_stream_id);
+        log.info('linkup, connectionId:', connectionId, 'video_stream_id:', video_stream_id);
         if (connections[connectionId] === undefined) {
             return callback('callback', 'error', 'connection does not exist');
         }
@@ -586,7 +586,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.cutoff = function (connectionId) {
-        log.debug('cutoff, connectionId:', connectionId);
+        log.info('cutoff, connectionId:', connectionId);
         if (connections[connectionId] && connections[connectionId].videoFrom) {
             if (outputs[connections[connectionId].videoFrom]) {
                 outputs[connections[connectionId].videoFrom].dispatcher.removeDestination('video', connections[connectionId].connection.receiver());
@@ -596,7 +596,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.setPrimary = function (stream_id, callback) {
-        log.debug('setPrimary, stream_id:', stream_id);
+        log.info('setPrimary, stream_id:', stream_id);
         if (inputManager.has(stream_id)) {
             let input;
             if (inputManager.isPending(stream_id)) {
@@ -621,7 +621,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.setRegion = function (stream_id, region_id, callback) {
-        log.debug('setRegion, stream_id:', stream_id, 'region_id:', region_id);
+        log.info('setRegion, stream_id:', stream_id, 'region_id:', region_id);
         if (inputManager.has(stream_id)) {
             if (inputManager.isPending(stream_id)) {
                 let originInput = layoutProcessor.getInput(region_id);
@@ -652,7 +652,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.getRegion = function (stream_id, callback) {
-        log.debug('getRegion, stream_id:', stream_id);
+        log.info('getRegion, stream_id:', stream_id);
         if (inputManager.has(stream_id) && !inputManager.isPending(stream_id)) {
             let inputId = inputManager.get(stream_id).id;
             let region = layoutProcessor.getRegion(inputId);
@@ -664,7 +664,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.setLayout = function (layout, callback) {
-        log.debug('setLayout, layout:', JSON.stringify(layout));
+        log.info('setLayout, layout:', JSON.stringify(layout));
 
         var specified_streams = layout.map((obj) => {return obj.stream ? obj.stream : null;}).filter((st) => { return st;});
         var current_streams = [];
@@ -717,14 +717,14 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     that.forceKeyFrame = function (stream_id) {
-        log.debug('forceKeyFrame, stream_id:', stream_id);
+        log.info('forceKeyFrame, stream_id:', stream_id);
         if (outputs[stream_id] && engine) {
             engine.forceKeyFrame(stream_id);
         }
     };
 
     that.drawText = function (textSpec, duration) {
-        log.debug('drawText, textSpec:', textSpec, 'duration:', duration);
+        log.info('drawText, textSpec:', textSpec, 'duration:', duration);
         if (drawing_text_tmr) {
           clearTimeout(drawing_text_tmr);
           drawing_text_tmr = undefined;
