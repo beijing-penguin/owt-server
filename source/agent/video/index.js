@@ -967,7 +967,7 @@ function VTranscoder(rpcClient, clusterIP) {
     };
 
     that.publish = function (stream_id, stream_type, options, callback) {
-        log.debug('publish, stream_id:', stream_id, 'stream_type:', stream_type, 'options:', options);
+        log.info('publish, stream_id:', stream_id, 'stream_type:', stream_type, 'options:', options);
         if (stream_type !== 'internal') {
             return callback('callback', 'error', 'can not publish a stream to video engine through a non-internal connection');
         }
