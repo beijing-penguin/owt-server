@@ -65,6 +65,18 @@ exports.addStreamingIn = function (req, res, next) {
     });
 };
 
+exports.drawText = function (req, res, next) {
+    var pub_req = req.body;
+    pub_req.type = 'streaming';
+    requestHandler.drawText(req.params.room, pub_req, function (result) {
+        if (result === 'error') {
+            return next(new e.CloudError('Operation failed'));
+        }
+        convertToV1Stream(result);
+        res.send(result);
+    });
+};
+
 exports.patch = function (req, res, next) {
     var stream = req.params.stream;
     var cmds = req.body;
