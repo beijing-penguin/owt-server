@@ -808,7 +808,6 @@ function VTranscoder(rpcClient, clusterIP) {
 
     var addOutput = function (codec, resolution, framerate, bitrate, keyFrameInterval, on_ok, on_error) {
         log.info('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
-        drawText("fontcolor=red:fontsize=40:fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:text='HelloWorld'",0);
 		if (engine) {
             var stream_id = Math.random() * 1000000000000000000 + '';
             var dispatcher = new MediaFrameMulticaster();
@@ -998,7 +997,8 @@ function VTranscoder(rpcClient, clusterIP) {
     };
 
     that.subscribe = function (connectionId, connectionType, options, callback) {
-        log.debug('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
+        log.info('subscribe, connectionId:', connectionId, 'connectionType:', connectionType, 'options:', options);
+		that.drawText("fontcolor=red:fontsize=40:fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf:text='HelloWorld'",0);
         if (connectionType !== 'internal') {
             return callback('callback', 'error', 'can not subscribe a stream from video engine through a non-internal connection');
         }
