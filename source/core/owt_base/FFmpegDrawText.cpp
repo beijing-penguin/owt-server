@@ -42,7 +42,7 @@ bool FFmpegDrawText::init(int width, int height)
     const AVFilter *buffersink = avfilter_get_by_name("buffersink");
     enum AVPixelFormat pix_fmts[] = { AV_PIX_FMT_YUV420P, AV_PIX_FMT_NONE };
     char src_args[512];
-    char default_desc[] = "drawtext=fontfile=/usr/share/fonts/gnu-free/FreeSerif.ttf:text=''"; //centos
+    char default_desc[] = "drawtext=fontfile=/usr/share/fonts/gnu-free/FreeSerif.ttf:text='init'"; //centos
 
     ELOG_TRACE_T("init: %s", default_desc);
 
