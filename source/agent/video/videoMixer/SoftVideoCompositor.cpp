@@ -454,12 +454,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
 
         //start draw-text
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer = inputFrame->video_frame_buffer();
-        webrtc::VideoFrame compositeFrame(
-                            compositeBuffer,
-                            webrtc::kVideoRotation_0,
-							Clock::GetRealTimeClock()->TimeInMilliseconds()
-                            );
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer_drawtext = inputFrame->video_frame_buffer();
+        webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 //		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * kMsToRtpTimestamp);
 //
 //		owt_base::Frame frame;
