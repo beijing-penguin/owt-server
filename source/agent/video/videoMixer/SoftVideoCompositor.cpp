@@ -461,16 +461,16 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //                            m_clock->TimeInMilliseconds()
 //                            );
 //		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * kMsToRtpTimestamp);
-//
-//		owt_base::Frame frame;
-//		memset(&frame, 0, sizeof(frame));
-//		frame.format = owt_base::FRAME_FORMAT_I420;
-//		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
-//		frame.length = 0; // unused.
-//		frame.timeStamp = compositeFrame.timestamp();
-//		frame.additionalInfo.video.width = compositeFrame.width();
-//		frame.additionalInfo.video.height = compositeFrame.height();
-//		m_textDrawer->drawFrame(frame);
+
+		owt_base::Frame frame;
+		memset(&frame, 0, sizeof(frame));
+		frame.format = owt_base::FRAME_FORMAT_I420;
+		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
+		frame.length = 0; // unused.
+		frame.timeStamp = inputFrame.timestamp();
+		frame.additionalInfo.video.width = inputFrame.width();
+		frame.additionalInfo.video.height = inputFrame.height();
+		m_textDrawer->drawFrame(frame);
 		//end draw-text
 
         if (inputFrame == NULL) {
