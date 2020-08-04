@@ -231,7 +231,7 @@ function VMixer(rpcClient, clusterIP) {
 
             let inputId = inputManager.add(stream_id, codec, conn, avatar);
             if (inputId >= 0) {
-                if (engine.addInput(inputId, codec, conn, avatar)) {
+                if (engine.addInput(inputId, codec, conn, avatar,null)) {
                     layoutProcessor.addInput(inputId);
                     log.debug('addInput ok, stream_id:', stream_id, 'codec:', codec, 'options:', options);
                     on_ok(stream_id);
@@ -259,7 +259,7 @@ function VMixer(rpcClient, clusterIP) {
                 if (newInput) {
                     // If there's pending input
                     let newStreamId = inputManager.getStreamFromInput(newInput.id);
-                    if (!engine.addInput(newInput.id, newInput.codec, newInput.conn, newInput.avatar)) {
+                    if (!engine.addInput(newInput.id, newInput.codec, newInput.conn, newInput.avatar,null)) {
                         layoutProcessor.removeInput(newInput.id);
                         log.error('engine fail to add pending input', newStreamId);
                     }
@@ -604,7 +604,7 @@ function VMixer(rpcClient, clusterIP) {
                 inputManager.enable(stream_id);
                 input = inputManager.get(stream_id);
                 engine.removeInput(input.id);
-                if (!engine.addInput(input.id, input.codec, input.conn, input.avatar)) {
+                if (!engine.addInput(input.id, input.codec, input.conn, input.avatar,null)) {
                     layoutProcessor.removeInput(input.id);
                     callback('callback', 'error', 'Switch input failed.');
                     return;
@@ -633,7 +633,7 @@ function VMixer(rpcClient, clusterIP) {
                 inputManager.enable(stream_id, inputManager.getStreamFromInput(originInput));
                 let input = inputManager.get(stream_id);
                 engine.removeInput(input.id);
-                if (!engine.addInput(input.id, input.codec, input.conn, input.avatar)) {
+                if (!engine.addInput(input.id, input.codec, input.conn, input.avatar,null)) {
                     layoutProcessor.removeInput(input.id);
                     callback('callback', 'error', 'Switch input failed.');
                 } else {
@@ -690,7 +690,7 @@ function VMixer(rpcClient, clusterIP) {
         current_streams.forEach((obj) => {
           let input = inputManager.add(obj.stream, obj.codec, obj.conn, obj.avatar);
           if (input >= 0) {
-            engine.addInput(input, obj.codec, obj.conn, obj.avatar);
+            engine.addInput(input, obj.codec, obj.conn, obj.avatar,null);
             if (specified_streams.indexOf(obj.stream) < 0) {
               for (var i in layout) {
                 if (!layout[i].stream) {

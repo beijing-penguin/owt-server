@@ -58,7 +58,7 @@ module.exports = function (rpcClient, selfRpcId, parentRpcId, clusterWorkerIP) {
             }
             conn.connect(options);
 
-            if (engine.addInput(owner, stream_id, codec, conn)) {
+            if (engine.addInput(owner, stream_id, codec, conn,null)) {
                 inputs[stream_id] = {owner: owner,
                                      connection: conn};
                 log.debug('addInput ok, for:', owner, 'codec:', codec, 'options:', options);
