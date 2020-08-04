@@ -621,6 +621,7 @@ SoftVideoCompositor::SoftVideoCompositor(uint32_t maxInput, VideoSize rootSize, 
     m_generators.resize(2);
     m_generators[0].reset(new SoftFrameGenerator(this, rootSize, bgColor, crop, 60, 15));
     m_generators[1].reset(new SoftFrameGenerator(this, rootSize, bgColor, crop, 48, 6));
+    m_textDrawer.reset(new owt_base::FFmpegDrawText());
 }
 
 SoftVideoCompositor::~SoftVideoCompositor()

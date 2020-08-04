@@ -195,6 +195,7 @@ private:
 
     std::vector<boost::shared_ptr<SoftInput>> m_inputs;
     boost::scoped_ptr<AvatarManager> m_avatarManager;
+    boost::shared_ptr<owt_base::FFmpegDrawText> m_textDrawer;
 };
 
 }
