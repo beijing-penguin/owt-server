@@ -464,7 +464,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.format = owt_base::FRAME_FORMAT_I420;
 		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
 		frame.length = 0; // unused.
-		frame.timeStamp = m_clock->TimeInMilliseconds();
+		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
 		frame.additionalInfo.video.width = compositeFrame.width();
 		frame.additionalInfo.video.height = compositeFrame.height();
 		m_textDrawer->drawFrame(frame);
