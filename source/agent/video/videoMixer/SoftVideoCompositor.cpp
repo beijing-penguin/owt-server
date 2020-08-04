@@ -742,9 +742,9 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
 
 		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
 		            width, height,
-		            reinterpret_cast<const uint8_t *>(frame.payload), width,
-		            reinterpret_cast<const uint8_t *>(frame.payload + width * height), width / 2,
-		            reinterpret_cast<const uint8_t *>(frame.payload + width * height * 5 / 4), width / 2
+		            reinterpret_cast<const uint8_t *>(&frame.payload), width,
+		            reinterpret_cast<const uint8_t *>(&frame.payload + width * height), width / 2,
+		            reinterpret_cast<const uint8_t *>(&frame.payload + width * height * 5 / 4), width / 2
 		            );
 		 boost::shared_ptr<webrtc::VideoFrame> webrtc_frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
 		 src = webrtc_frame;
