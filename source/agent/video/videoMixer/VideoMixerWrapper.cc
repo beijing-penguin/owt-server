@@ -97,7 +97,10 @@ void VideoMixer::addInput(const v8::FunctionCallbackInfo<v8::Value>& args) {
   String::Utf8Value param3(args[3]->ToString());
   std::string avatarData = std::string(*param3);
 
-  int r = me->addInput(inputIndex, codec, src, avatarData);
+  // Set avatar data
+  String::Utf8Value param4(args[4]->ToString());
+  std::string text = std::string(*param4);
+  int r = me->addInput(inputIndex, codec, src, avatarData,text);
 
   args.GetReturnValue().Set(Number::New(isolate, r));
 }
