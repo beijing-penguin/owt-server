@@ -452,6 +452,27 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
         boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
+
+        //start draw-text
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer = inputFrame->video_frame_buffer();
+        webrtc::VideoFrame compositeFrame(
+                            compositeBuffer,
+                            webrtc::kVideoRotation_0,
+                            m_clock->TimeInMilliseconds()
+                            );
+		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * kMsToRtpTimestamp);
+
+		owt_base::Frame frame;
+		memset(&frame, 0, sizeof(frame));
+		frame.format = owt_base::FRAME_FORMAT_I420;
+		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
+		frame.length = 0; // unused.
+		frame.timeStamp = compositeFrame.timestamp();
+		frame.additionalInfo.video.width = compositeFrame.width();
+		frame.additionalInfo.video.height = compositeFrame.height();
+		m_textDrawer->drawFrame(frame);
+		//end draw-text
+
         if (inputFrame == NULL) {
             continue;
         }
@@ -710,27 +731,27 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
 
         //----------------------------start draw_text----------------------------
         //TODO 添加文本
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer = src->video_frame_buffer();
-        webrtc::VideoFrame compositeFrame(
-                            compositeBuffer,
-                            webrtc::kVideoRotation_0,
-                            m_clock->TimeInMilliseconds()
-                            );
+//        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer = src->video_frame_buffer();
+//        webrtc::VideoFrame compositeFrame(
+//                            compositeBuffer,
+//                            webrtc::kVideoRotation_0,
+//                            m_clock->TimeInMilliseconds()
+//                            );
+//
+//        compositeFrame.set_timestamp(compositeFrame.timestamp_us() * kMsToRtpTimestamp);
+//
+//		owt_base::Frame frame;
+//		memset(&frame, 0, sizeof(frame));
+//		frame.format = owt_base::FRAME_FORMAT_I420;
+//		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
+//		frame.length = 0; // unused.
+//		frame.timeStamp = compositeFrame.timestamp();
+//		frame.additionalInfo.video.width = compositeFrame.width();
+//		frame.additionalInfo.video.height = compositeFrame.height();
+//
+//		m_textDrawer->drawFrame(frame);
 
-        compositeFrame.set_timestamp(compositeFrame.timestamp_us() * kMsToRtpTimestamp);
-
-		owt_base::Frame frame;
-		memset(&frame, 0, sizeof(frame));
-		frame.format = owt_base::FRAME_FORMAT_I420;
-		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
-		frame.length = 0; // unused.
-		frame.timeStamp = compositeFrame.timestamp();
-		frame.additionalInfo.video.width = compositeFrame.width();
-		frame.additionalInfo.video.height = compositeFrame.height();
-
-		m_textDrawer->drawFrame(frame);
-
-		src = reinterpret_cast<webrtc::VideoFrame>(frame.payload);
+		//src = reinterpret_cast<webrtc::VideoFrame>(frame.payload);
         //boost::shared_ptr<webrtc::VideoFrame> frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
         //----------------------------end draw_text----------------------------
     } else {
