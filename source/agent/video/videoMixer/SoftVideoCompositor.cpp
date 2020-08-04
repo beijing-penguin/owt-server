@@ -722,6 +722,8 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
         uint32_t width = compositeBuffer_drawtext->width();
         uint32_t height = compositeBuffer_drawtext->height();
 
+        ELOG_INFO_T("getInputFrame-width=%s", width);
+        ELOG_INFO_T("getInputFrame-height=%s", height);
 
 		webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 
