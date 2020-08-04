@@ -231,7 +231,7 @@ function VMixer(rpcClient, clusterIP) {
 
             let inputId = inputManager.add(stream_id, codec, conn, avatar);
             if (inputId >= 0) {
-                if (engine.addInput(inputId, codec, conn, avatar,null)) {
+                if (engine.addInput(inputId, codec, conn, avatar,"aaaa中文")) {
                     layoutProcessor.addInput(inputId);
                     log.debug('addInput ok, stream_id:', stream_id, 'codec:', codec, 'options:', options);
                     on_ok(stream_id);
