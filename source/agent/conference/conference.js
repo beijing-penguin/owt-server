@@ -2450,7 +2450,7 @@ var Conference = function (rpcClient, selfRpcId) {
   that.drawText = function(streamId, textSpec, duration, callback) {
 	log.info("streamId=",streamId,",textSpec=",textSpec,",duration=",duration);
     if (roomController) {
-      roomController.drawText(streamId, textSpec, duration);
+      roomController.drawText(streamId+"-common", textSpec, duration);
       callback('callback', 'ok');
     } else {
       callback('callback', 'error', 'Controllers are not ready');

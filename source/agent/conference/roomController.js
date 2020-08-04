@@ -156,6 +156,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
     // Given mix stram ID, return the view
     var getViewOfMixStream = function(mixStreamId) {
         var prefix = room_id + '-';
+		log.info("room_id=",room_id,",mixStreamId=",mixStreamId,",mixStreamId.indexOf(prefix)=",mixStreamId.indexOf(prefix));
         if (mixStreamId.indexOf(prefix) != 0) {
             return null;
         }
