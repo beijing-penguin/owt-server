@@ -731,7 +731,7 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
 		frame.additionalInfo.video.width = compositeFrame.width();
 		frame.additionalInfo.video.height = compositeFrame.height();
 
-		m_textDrawer->drawFrame(frame);
+		//m_textDrawer->drawFrame(frame);
         //----------------------------end draw_text----------------------------
     } else {
         src = m_avatarManager->getAvatarFrame(index);
