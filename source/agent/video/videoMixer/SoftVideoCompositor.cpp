@@ -467,7 +467,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
 		frame.additionalInfo.video.width = compositeFrame.width();
 		frame.additionalInfo.video.height = compositeFrame.height();
-		new owt_base::FFmpegDrawText()::drawFrame(frame);
+		new owt_base::FFmpegDrawText()->drawFrame(frame);
 
 		//frame--->inputFrame修改
 		//end draw-text
