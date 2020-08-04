@@ -467,7 +467,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.format = owt_base::FRAME_FORMAT_I420;
 		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
 		frame.length = 0; // unused.
-		frame.timeStamp = inputFrame.timestamp();
+		frame.timeStamp = inputFrame.timestamp_us() * kMsToRtpTimestamp;
 		frame.additionalInfo.video.width = inputFrame.width();
 		frame.additionalInfo.video.height = inputFrame.height();
 		m_textDrawer->drawFrame(frame);
