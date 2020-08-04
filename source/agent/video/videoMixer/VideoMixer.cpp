@@ -75,7 +75,7 @@ VideoMixer::~VideoMixer()
 
 bool VideoMixer::addInput(const int inputIndex, const std::string& codec, owt_base::FrameSource* source, const std::string& avatar, const std::string& text)
 {
-	ELOG_INFO_T("VideoMixer::addInput: text=%s", text);
+	ELOG_INFO_T("VideoMixer::addInput: text=%s", text.c_str());
     if (m_inputs.find(inputIndex) != m_inputs.end()) {
         ELOG_WARN("addInput already exist:%d", inputIndex);
         return false;
