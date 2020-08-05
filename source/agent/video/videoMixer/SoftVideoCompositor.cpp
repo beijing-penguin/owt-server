@@ -473,7 +473,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.additionalInfo.video.width = inputFrame->width();
 		frame.additionalInfo.video.height = inputFrame->height();
 
-		boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer = new owt_base::FFmpegDrawText();
+		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;
+		owt_base::FFmpegDrawText * local_m_textDrawer = new owt_base::FFmpegDrawText();
 		local_m_textDrawer->drawFrame(frame);
 		FILE *fp = fopen("yuvtext.yuv", "wb+");
 		if (fp == NULL) {
@@ -484,6 +485,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		}
 		ELOG_INFO("width=%d",inputBuffer->width());
 		ELOG_INFO("height=%d",inputBuffer->height());
+
+		delete local_m_textDrawer;
 //		if (fp != NULL) {
 //			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
 //			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
