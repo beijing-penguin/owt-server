@@ -725,29 +725,29 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
         ELOG_INFO_T("getInputFrame-width=%d", width);
         ELOG_INFO_T("getInputFrame-height=%d", height);
 //
-//		webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
-//
-//		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * 90);
-//
-//		owt_base::Frame frame;
-//		memset(&frame, 0, sizeof(frame));
-//		frame.format = owt_base::FRAME_FORMAT_I420;
-//		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
-//		frame.length = 0; // unused.
-//		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
-//		frame.additionalInfo.video.width = compositeFrame.width();
-//		frame.additionalInfo.video.height = compositeFrame.height();
-//
-//		m_textDrawer->drawFrame(frame);
-//
-//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
-//		            width, height,
-//		            reinterpret_cast<const uint8_t *>(&frame.payload), width,
-//		            reinterpret_cast<const uint8_t *>(&frame.payload + width * height), width / 2,
-//		            reinterpret_cast<const uint8_t *>(&frame.payload + width * height * 5 / 4), width / 2
-//		            );
-//		 boost::shared_ptr<webrtc::VideoFrame> webrtc_frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
-//		 src = webrtc_frame;
+		webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
+
+		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * 90);
+
+		owt_base::Frame frame;
+		memset(&frame, 0, sizeof(frame));
+		frame.format = owt_base::FRAME_FORMAT_I420;
+		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
+		frame.length = 0; // unused.
+		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
+		frame.additionalInfo.video.width = compositeFrame.width();
+		frame.additionalInfo.video.height = compositeFrame.height();
+
+		m_textDrawer->drawFrame(frame);
+
+		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
+		            width, height,
+		            reinterpret_cast<const uint8_t *>(frame.payload), width,
+		            reinterpret_cast<const uint8_t *>(frame.payload + width * height), width / 2,
+		            reinterpret_cast<const uint8_t *>(frame.payload + width * height * 5 / 4), width / 2
+		            );
+		 boost::shared_ptr<webrtc::VideoFrame> webrtc_frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
+		 src = webrtc_frame;
         //----------------------------end draw_text----------------------------
     } else {
         src = m_avatarManager->getAvatarFrame(index);
