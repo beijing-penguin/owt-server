@@ -489,7 +489,13 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 
 		ELOG_INFO("height=%d",sizeof(*&frame.payload));
 
-		fwrite(frame.payload, sizeof(frame.payload) , 1, fp );
+		uint32_t buflen = sizeof(uint8_t) * frame.length;
+		fwrite((char*)frame.payload, buflen , 1, fp );
+
+//		char * buf = malloc(buflen);
+//		memcpy(buf, frame.payload, buflen);
+//		fwrite(buf, buflen, 1, fp);
+//		free(buf);
 //		if (fp != NULL) {
 //			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
 //			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
