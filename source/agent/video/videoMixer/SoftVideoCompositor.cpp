@@ -463,14 +463,33 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         }
         //webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer = generateFrame();
+		webrtc::VideoFrame compositeFrame(
+				compositeBuffer,
+				webrtc::kVideoRotation_0,
+				m_clock->TimeInMilliseconds()
+				);
+		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * kMsToRtpTimestamp);
+
 		owt_base::Frame frame;
 		memset(&frame, 0, sizeof(frame));
 		frame.format = owt_base::FRAME_FORMAT_I420;
-		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
-		frame.length = 0;
-		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
-		frame.additionalInfo.video.width = inputFrame->width();
-		frame.additionalInfo.video.height = inputFrame->height();
+		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
+		frame.length = 0; // unused.
+		frame.timeStamp = compositeFrame.timestamp();
+		frame.additionalInfo.video.width = compositeFrame.width();
+		frame.additionalInfo.video.height = compositeFrame.height();
+
+//		m_textDrawer->drawFrame(frame);
+//
+//		owt_base::Frame frame;
+//		memset(&frame, 0, sizeof(frame));
+//		frame.format = owt_base::FRAME_FORMAT_I420;
+//		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
+//		frame.length = 0;
+//		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
+//		frame.additionalInfo.video.width = inputFrame->width();
+//		frame.additionalInfo.video.height = inputFrame->height();
 
 		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;
 		owt_base::FFmpegDrawText * local_m_textDrawer = new owt_base::FFmpegDrawText();
@@ -485,8 +504,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		}
 
 		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
-		ELOG_INFO("width=%d",inputBuffer->width());
-		ELOG_INFO("height=%d",inputBuffer->height());
+		ELOG_INFO("width=%d",inputFrame->width());
+		ELOG_INFO("height=%d",inputFrame->height());
 
 		ELOG_INFO("length=%d", frame.length);
 
@@ -503,9 +522,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //		fwrite(buf, buflen, 1, fp);
 //		free(buf);
 		if (fp != NULL) {
-			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
-			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+			fwrite(compositeBuffer->DataY(), 1, compositeBuffer->height() * compositeBuffer->width(), fp);
+			fwrite(compositeBuffer->DataU(), 1, compositeBuffer->height() * compositeBuffer->width() / 4, fp);
+			fwrite(compositeBuffer->DataV(), 1, compositeBuffer->height() * compositeBuffer->width() / 4, fp);
 			fflush(fp);
 			fclose(fp);
 		}
