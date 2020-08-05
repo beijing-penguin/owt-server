@@ -463,9 +463,11 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         }
         //webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_compositeBuffer = generateFrame();
+        //rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_compositeBuffer = generateFrame();
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+//        rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_compositeBuffer = generateFrame();
 		webrtc::VideoFrame new_compositeFrame(
-				new_compositeBuffer,
+				inputBuffer,
 				webrtc::kVideoRotation_0,
 				Clock::GetRealTimeClock()->TimeInMilliseconds()
 				);
@@ -503,7 +505,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 			ELOG_INFO("write yuv file");
 		}
 
-		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+
 		ELOG_INFO("width=%d",inputFrame->width());
 		ELOG_INFO("height=%d",inputFrame->height());
 
@@ -522,9 +524,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //		fwrite(buf, buflen, 1, fp);
 //		free(buf);
 		if (fp != NULL) {
-			fwrite(compositeBuffer->DataY(), 1, compositeBuffer->height() * compositeBuffer->width(), fp);
-			fwrite(compositeBuffer->DataU(), 1, compositeBuffer->height() * compositeBuffer->width() / 4, fp);
-			fwrite(compositeBuffer->DataV(), 1, compositeBuffer->height() * compositeBuffer->width() / 4, fp);
+			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
+			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
 			fflush(fp);
 			fclose(fp);
 		}
