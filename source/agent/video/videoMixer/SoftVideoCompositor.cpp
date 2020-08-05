@@ -715,7 +715,7 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
         src = input->popInput();
         ELOG_INFO_T("start draw_text-----------------------");
 
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> vfb = src.video_frame_buffer();
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> vfb = src->video_frame_buffer();
         FILE *fp = fopen("yuvtext.yuv", "wb+");
 		if (fp != NULL) {
 			fwrite(vfb.get()->GetI420()->DataY(), 1, frame.height() * frame.width(), fp);
