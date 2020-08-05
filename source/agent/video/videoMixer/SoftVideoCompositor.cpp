@@ -470,6 +470,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		}else{
 			ELOG_INFO("write yuv file");
 		}
+		ELOG_INFO("height=%d",inputBuffer->height(),"width=%d",inputBuffer->width());
 		if (fp != NULL) {
 			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
 			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
