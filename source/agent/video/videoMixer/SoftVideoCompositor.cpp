@@ -464,6 +464,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 		FILE *fp = fopen("yuvtext.yuv", "wb+");
+		if (fp == NULL) {
+			ELOG_INFO_T("file not exist");
+		}
 		if (fp != NULL) {
 			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
 			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
