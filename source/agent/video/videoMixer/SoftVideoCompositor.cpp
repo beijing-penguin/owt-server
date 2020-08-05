@@ -500,19 +500,19 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 
 		local_m_textDrawer->drawFrame(frame);
 		delete local_m_textDrawer;
-		FILE *fp = fopen("yuvtext.yuv", "wb+");
-		if (fp == NULL) {
-			//ELOG_INFO_T("file not exist");
-			ELOG_INFO("file not exist");
-		}else{
-			ELOG_INFO("write yuv file");
-		}
-
-
-		ELOG_INFO("width=%d",inputFrame->width());
-		ELOG_INFO("height=%d",inputFrame->height());
-
-		ELOG_INFO("length=%d", frame.length);
+//		FILE *fp = fopen("yuvtext.yuv", "wb+");
+//		if (fp == NULL) {
+//			//ELOG_INFO_T("file not exist");
+//			ELOG_INFO("file not exist");
+//		}else{
+//			ELOG_INFO("write yuv file");
+//		}
+//
+//
+//		ELOG_INFO("width=%d",inputFrame->width());
+//		ELOG_INFO("height=%d",inputFrame->height());
+//
+//		ELOG_INFO("length=%d", frame.length);
 
 		//uint32_t buflen = sizeof(uint8_t) * frame.length;
 
@@ -526,13 +526,13 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //		memcpy(buf, frame.payload, buflen);
 //		fwrite(buf, buflen, 1, fp);
 //		free(buf);
-		if (fp != NULL) {
-			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
-			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-			fflush(fp);
-			fclose(fp);
-		}
+//		if (fp != NULL) {
+//			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
+//			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+//			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+//			fflush(fp);
+//			fclose(fp);
+//		}
 
 //        char *image = new char [size];;
 //		in.read (image, size);
