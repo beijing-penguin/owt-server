@@ -719,11 +719,11 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
         //----------------------------start draw_text----------------------------
         //TODO 添加文本
         //rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer_drawtext = src->video_frame_buffer();
-        uint32_t width = src->width();
-        uint32_t height = src->height();
+        //uint32_t width = src->width();
+        //uint32_t height = src->height();
 
-        ELOG_INFO_T("getInputFrame-width=%d", width);
-        ELOG_INFO_T("getInputFrame-height=%d", height);
+        //ELOG_INFO_T("getInputFrame-width=%d", width);
+        //ELOG_INFO_T("getInputFrame-height=%d", height);
 //		webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 //
 //		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * 90);
