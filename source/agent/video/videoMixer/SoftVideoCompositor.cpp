@@ -467,6 +467,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		if (fp == NULL) {
 			//ELOG_INFO_T("file not exist");
 			ELOG_INFO("file not exist");
+		}else{
+			ELOG_INFO("write yuv file");
 		}
 		if (fp != NULL) {
 			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
