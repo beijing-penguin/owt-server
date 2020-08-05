@@ -462,13 +462,12 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
             continue;
         }
         //webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
 		owt_base::Frame frame;
 		memset(&frame, 0, sizeof(frame));
 		frame.format = owt_base::FRAME_FORMAT_I420;
 		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
-		frame.length = 0; // unused.
+		frame.length = 0;
 		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
 		frame.additionalInfo.video.width = inputFrame->width();
 		frame.additionalInfo.video.height = inputFrame->height();
@@ -484,28 +483,32 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		}else{
 			ELOG_INFO("write yuv file");
 		}
+
+		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 		ELOG_INFO("width=%d",inputBuffer->width());
 		ELOG_INFO("height=%d",inputBuffer->height());
 
-		ELOG_INFO("height=%d",sizeof(*&frame.payload));
+		ELOG_INFO("length=%d", frame.length);
 
 		//uint32_t buflen = sizeof(uint8_t) * frame.length;
-		fwrite(frame.payload, sizeof(uint8_t) , frame.length, fp );
 
-		fflush(fp);
-
-		fclose(fp);
+//		fwrite(frame.payload, sizeof(uint8_t) , frame.length, fp );
+//
+//		fflush(fp);
+//
+//		fclose(fp);
 
 //		char * buf = malloc(buflen);
 //		memcpy(buf, frame.payload, buflen);
 //		fwrite(buf, buflen, 1, fp);
 //		free(buf);
-//		if (fp != NULL) {
-//			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
-//			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-//			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-//			fflush(fp);
-//		}
+		if (fp != NULL) {
+			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
+			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+			fflush(fp);
+			fclose(fp);
+		}
 
 //        char *image = new char [size];;
 //		in.read (image, size);
