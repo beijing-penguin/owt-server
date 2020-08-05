@@ -757,40 +757,40 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
     if (input->isActive()) {
         //src = input->popInput();
         ELOG_INFO_T("start draw_text-----------------------");
-
-        uint32_t width, height;
-        std::string url = "avatars/avatar_blue.180x180.yuv";
-		if (!getImageSize(url, &width, &height))
-			return NULL;
-
-		std::ifstream in(url, std::ios::in | std::ios::binary);
-
-		in.seekg (0, in.end);
-		uint32_t size = in.tellg();
-		in.seekg (0, in.beg);
-
-		if (size <= 0 || ((width * height * 3 + 1) / 2) != size) {
-			ELOG_WARN("Open avatar image(%s) error, invalid size %d, expected size %d"
-					, url.c_str(), size, (width * height * 3 + 1) / 2);
-			return NULL;
-		}
-
-		char *image = new char [size];;
-		in.read (image, size);
-		in.close();
-
-		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
-				width, height,
-				reinterpret_cast<const uint8_t *>(image), width,
-				reinterpret_cast<const uint8_t *>(image + width * height), width / 2,
-				reinterpret_cast<const uint8_t *>(image + width * height * 5 / 4), width / 2
-				);
-
-		boost::shared_ptr<webrtc::VideoFrame> frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
-
-		delete [] image;
-
-		src = frame;
+        src = m_avatarManager->getAvatarFrame(index);
+//        uint32_t width, height;
+//        std::string url = "avatars/avatar_blue.180x180.yuv";
+//		if (!getImageSize(url, &width, &height))
+//			return NULL;
+//
+//		std::ifstream in(url, std::ios::in | std::ios::binary);
+//
+//		in.seekg (0, in.end);
+//		uint32_t size = in.tellg();
+//		in.seekg (0, in.beg);
+//
+//		if (size <= 0 || ((width * height * 3 + 1) / 2) != size) {
+//			ELOG_WARN("Open avatar image(%s) error, invalid size %d, expected size %d"
+//					, url.c_str(), size, (width * height * 3 + 1) / 2);
+//			return NULL;
+//		}
+//
+//		char *image = new char [size];;
+//		in.read (image, size);
+//		in.close();
+//
+//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
+//				width, height,
+//				reinterpret_cast<const uint8_t *>(image), width,
+//				reinterpret_cast<const uint8_t *>(image + width * height), width / 2,
+//				reinterpret_cast<const uint8_t *>(image + width * height * 5 / 4), width / 2
+//				);
+//
+//		boost::shared_ptr<webrtc::VideoFrame> frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
+//
+//		delete [] image;
+//
+//		src = frame;
 
 //        //----------------------------start draw_text----------------------------
 //        //TODO 添加文本
