@@ -496,7 +496,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;
 		owt_base::FFmpegDrawText * local_m_textDrawer = new owt_base::FFmpegDrawText();
 		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=40:text='CPP welcome时信会议（字幕）'");
-		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=40:text='CPP welcome时信会议（字幕）'：x=(w)/2:y=(h)/2");
+		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=20:text='CPP welcome时信会议（字幕）':x=(w)/2:y=(h)/2");
 		local_m_textDrawer->enable(true);
 
 		local_m_textDrawer->drawFrame(frame);
