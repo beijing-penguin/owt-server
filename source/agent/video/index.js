@@ -275,7 +275,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     var addOutput = function (codec, resolution, framerate, bitrate, keyFrameInterval, on_ok, on_error) {
-        engine.drawText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=20:text='welcome时信会议（字幕）'");
+        //engine.drawText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=80:text='welcome时信会议（字幕）'");
 		log.info('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
         if (engine) {
             var stream_id = Math.random() * 1000000000000000000 + '';
