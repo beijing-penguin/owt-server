@@ -714,6 +714,15 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
     if (input->isActive()) {
         src = input->popInput();
         ELOG_INFO_T("start draw_text-----------------------");
+
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> vfb = src.video_frame_buffer();
+        FILE *fp = fopen("yuvtext.yuv", "wb+");
+		if (fp != NULL) {
+			fwrite(vfb.get()->GetI420()->DataY(), 1, frame.height() * frame.width(), fp);
+			fwrite(vfb.get()->GetI420()->DataU(), 1, frame.height() * frame.width() / 4, fp);
+			fwrite(vfb.get()->GetI420()->DataV(), 1, frame.height() * frame.width() / 4, fp);
+			fflush(fp);
+		}
         //src = m_avatarManager->getAvatarFrame(index);
 
         //----------------------------start draw_text----------------------------
