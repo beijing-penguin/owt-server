@@ -115,7 +115,7 @@ public:
 protected:
     rtc::scoped_refptr<webrtc::VideoFrameBuffer> generateFrame();
     rtc::scoped_refptr<webrtc::VideoFrameBuffer> layout();
-    void layout_regions(SoftFrameGenerator *t, rtc::scoped_refptr<webrtc::I420Buffer> compositeBuffer, const LayoutSolution &regions);
+    static void layout_regions(SoftFrameGenerator *t, rtc::scoped_refptr<webrtc::I420Buffer> compositeBuffer, const LayoutSolution &regions);
 
     void reconfigureIfNeeded();
 

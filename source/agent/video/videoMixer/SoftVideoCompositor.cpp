@@ -473,7 +473,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.additionalInfo.video.width = inputFrame->width();
 		frame.additionalInfo.video.height = inputFrame->height();
 
-		m_textDrawer->drawFrame(frame);
+		boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer = new owt_base::FFmpegDrawText();
+		local_m_textDrawer->drawFrame(frame);
 		FILE *fp = fopen("yuvtext.yuv", "wb+");
 		if (fp == NULL) {
 			//ELOG_INFO_T("file not exist");
