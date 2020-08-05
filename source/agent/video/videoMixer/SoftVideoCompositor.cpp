@@ -487,9 +487,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		ELOG_INFO("width=%d",inputBuffer->width());
 		ELOG_INFO("height=%d",inputBuffer->height());
 
-		ELOG_INFO("height=%c",frame.payload);
+		ELOG_INFO("height=%d",frame.payload);
 
-
+		fwrite(frame.payload, sizeof(frame.payload) , 1, fp );
 //		if (fp != NULL) {
 //			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
 //			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
