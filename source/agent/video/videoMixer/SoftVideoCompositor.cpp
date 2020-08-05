@@ -718,9 +718,9 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> vfb = src->video_frame_buffer();
         FILE *fp = fopen("yuvtext.yuv", "wb+");
 		if (fp != NULL) {
-			fwrite(vfb.get()->GetI420()->DataY(), 1, frame.height() * frame.width(), fp);
-			fwrite(vfb.get()->GetI420()->DataU(), 1, frame.height() * frame.width() / 4, fp);
-			fwrite(vfb.get()->GetI420()->DataV(), 1, frame.height() * frame.width() / 4, fp);
+			fwrite(vfb->DataY(), 1, vfb->height() * vfb->width(), fp);
+			fwrite(vfb->DataU(), 1, vfb->height() * vfb->width() / 4, fp);
+			fwrite(vfb->DataV(), 1, vfb->height() * vfb->width() / 4, fp);
 			fflush(fp);
 		}
         //src = m_avatarManager->getAvatarFrame(index);
