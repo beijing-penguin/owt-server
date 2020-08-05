@@ -470,8 +470,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
 		frame.length = 0; // unused.
 		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
-		frame.additionalInfo.video.width = inputFrame.width();
-		frame.additionalInfo.video.height = inputFrame.height();
+		frame.additionalInfo.video.width = inputFrame->width();
+		frame.additionalInfo.video.height = inputFrame->height();
 
 		m_textDrawer->drawFrame(frame);
 		FILE *fp = fopen("yuvtext.yuv", "wb+");
