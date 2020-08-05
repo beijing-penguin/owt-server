@@ -461,8 +461,19 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         if (inputFrame == NULL) {
             continue;
         }
-
+        //webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+
+		owt_base::Frame frame;
+		memset(&frame, 0, sizeof(frame));
+		frame.format = owt_base::FRAME_FORMAT_I420;
+		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
+		frame.length = 0; // unused.
+		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
+		frame.additionalInfo.video.width = inputFrame.width();
+		frame.additionalInfo.video.height = inputFrame.height();
+
+		m_textDrawer->drawFrame(frame);
 		FILE *fp = fopen("yuvtext.yuv", "wb+");
 		if (fp == NULL) {
 			//ELOG_INFO_T("file not exist");
@@ -472,13 +483,25 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		}
 		ELOG_INFO("width=%d",inputBuffer->width());
 		ELOG_INFO("height=%d",inputBuffer->height());
-		if (fp != NULL) {
-			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
-			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-			fflush(fp);
-		}
+//		if (fp != NULL) {
+//			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
+//			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+//			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+//			fflush(fp);
+//		}
 
+//        char *image = new char [size];;
+//		in.read (image, size);
+//		in.close();
+//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
+//		            width, height,
+//		            reinterpret_cast<const uint8_t *>(image), width,
+//		            reinterpret_cast<const uint8_t *>(image + width * height), width / 2,
+//		            reinterpret_cast<const uint8_t *>(image + width * height * 5 / 4), width / 2
+//		            );
+//
+//		boost::shared_ptr<webrtc::VideoFrame> new_inputFrame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
+//		rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_inputBuffer = new_inputFrame->video_frame_buffer();
 
         Region region = it->region;
         uint32_t dst_x      = (uint64_t)composite_width * region.area.rect.left.numerator / region.area.rect.left.denominator;
