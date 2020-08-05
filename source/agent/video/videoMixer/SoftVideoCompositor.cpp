@@ -476,6 +476,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;
 		owt_base::FFmpegDrawText * local_m_textDrawer = new owt_base::FFmpegDrawText();
 		local_m_textDrawer->drawFrame(frame);
+		delete local_m_textDrawer;
 		FILE *fp = fopen("yuvtext.yuv", "wb+");
 		if (fp == NULL) {
 			//ELOG_INFO_T("file not exist");
@@ -486,7 +487,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		ELOG_INFO("width=%d",inputBuffer->width());
 		ELOG_INFO("height=%d",inputBuffer->height());
 
-		delete local_m_textDrawer;
+		ELOG_INFO("height=%c",frame.payload);
+
+
 //		if (fp != NULL) {
 //			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
 //			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
