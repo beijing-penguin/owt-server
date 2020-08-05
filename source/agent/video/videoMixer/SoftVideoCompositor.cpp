@@ -463,6 +463,14 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         }
 
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+		FILE *fp = fopen("yuvtext.yuv", "wb+");
+		if (fp != NULL) {
+			fwrite(vfb->DataY(), 1, vfb->height() * vfb->width(), fp);
+			fwrite(vfb->DataU(), 1, vfb->height() * vfb->width() / 4, fp);
+			fwrite(vfb->DataV(), 1, vfb->height() * vfb->width() / 4, fp);
+			fflush(fp);
+		}
+
 
         Region region = it->region;
         uint32_t dst_x      = (uint64_t)composite_width * region.area.rect.left.numerator / region.area.rect.left.denominator;
@@ -714,15 +722,6 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
     if (input->isActive()) {
         src = input->popInput();
         ELOG_INFO_T("start draw_text-----------------------");
-
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> vfb = src->video_frame_buffer();
-        FILE *fp = fopen("yuvtext.yuv", "wb+");
-		if (fp != NULL) {
-			fwrite(vfb->DataY(), 1, vfb->height() * vfb->width(), fp);
-			fwrite(vfb->DataU(), 1, vfb->height() * vfb->width() / 4, fp);
-			fwrite(vfb->DataV(), 1, vfb->height() * vfb->width() / 4, fp);
-			fflush(fp);
-		}
         //src = m_avatarManager->getAvatarFrame(index);
 
         //----------------------------start draw_text----------------------------
