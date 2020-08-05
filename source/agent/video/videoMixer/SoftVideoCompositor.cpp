@@ -706,49 +706,6 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     ELOG_ERROR("Can not removeOutput, dst(%p)", dst);
     return false;
 }
-bool getImageSize(const std::string &url, uint32_t *pWidth, uint32_t *pHeight)
-{
-    uint32_t width, height;
-    size_t begin, end;
-    char *str_end = NULL;
-
-    begin = url.find('.');
-    if (begin == std::string::npos) {
-        ELOG_WARN("Invalid image size in url(%s)", url.c_str());
-        return false;
-    }
-
-    end = url.find('x', begin);
-    if (end == std::string::npos) {
-        ELOG_WARN("Invalid image size in url(%s)", url.c_str());
-        return false;
-    }
-
-    width = strtol(url.data() + begin + 1, &str_end, 10);
-    if (url.data() + end != str_end) {
-        ELOG_WARN("Invalid image size in url(%s)", url.c_str());
-        return false;
-    }
-
-    begin = end;
-    end = url.find('.', begin);
-    if (end == std::string::npos) {
-        ELOG_WARN("Invalid image size in url(%s)", url.c_str());
-        return false;
-    }
-
-    height = strtol(url.data() + begin + 1, &str_end, 10);
-    if (url.data() + end != str_end) {
-        ELOG_WARN("Invalid image size in url(%s)", url.c_str());
-        return false;
-    }
-
-    *pWidth = width;
-    *pHeight = height;
-
-    ELOG_TRACE("Image size in url(%s), %dx%d", url.c_str(), *pWidth, *pHeight);
-    return true;
-}
 boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int index)
 {
     boost::shared_ptr<webrtc::VideoFrame> src;
