@@ -706,7 +706,7 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     ELOG_ERROR("Can not removeOutput, dst(%p)", dst);
     return false;
 }
-void getImageSize(const std::string &url, uint32_t *pWidth, uint32_t *pHeight)
+bool getImageSize(const std::string &url, uint32_t *pWidth, uint32_t *pHeight)
 {
     uint32_t width, height;
     size_t begin, end;
