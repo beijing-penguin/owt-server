@@ -712,53 +712,18 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
 
     auto& input = m_inputs[index];
     if (input->isActive()) {
-        //src = input->popInput();
+        src = input->popInput();
         ELOG_INFO_T("start draw_text-----------------------");
-        src = m_avatarManager->getAvatarFrame(index);
-//        uint32_t width, height;
-//        std::string url = "avatars/avatar_blue.180x180.yuv";
-//		if (!getImageSize(url, &width, &height))
-//			return NULL;
-//
-//		std::ifstream in(url, std::ios::in | std::ios::binary);
-//
-//		in.seekg (0, in.end);
-//		uint32_t size = in.tellg();
-//		in.seekg (0, in.beg);
-//
-//		if (size <= 0 || ((width * height * 3 + 1) / 2) != size) {
-//			ELOG_WARN("Open avatar image(%s) error, invalid size %d, expected size %d"
-//					, url.c_str(), size, (width * height * 3 + 1) / 2);
-//			return NULL;
-//		}
-//
-//		char *image = new char [size];;
-//		in.read (image, size);
-//		in.close();
-//
-//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
-//				width, height,
-//				reinterpret_cast<const uint8_t *>(image), width,
-//				reinterpret_cast<const uint8_t *>(image + width * height), width / 2,
-//				reinterpret_cast<const uint8_t *>(image + width * height * 5 / 4), width / 2
-//				);
-//
-//		boost::shared_ptr<webrtc::VideoFrame> frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
-//
-//		delete [] image;
-//
-//		src = frame;
+        //src = m_avatarManager->getAvatarFrame(index);
 
-//        //----------------------------start draw_text----------------------------
-//        //TODO 添加文本
-//        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer_drawtext = src->video_frame_buffer();
-////
-//        uint32_t width = compositeBuffer_drawtext->width();
-//        uint32_t height = compositeBuffer_drawtext->height();
-//
-//        ELOG_INFO_T("getInputFrame-width=%d", width);
-//        ELOG_INFO_T("getInputFrame-height=%d", height);
-////
+        //----------------------------start draw_text----------------------------
+        //TODO 添加文本
+        rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer_drawtext = src->video_frame_buffer();
+        uint32_t width = compositeBuffer_drawtext->width();
+        uint32_t height = compositeBuffer_drawtext->height();
+
+        ELOG_INFO_T("getInputFrame-width=%d", width);
+        ELOG_INFO_T("getInputFrame-height=%d", height);
 //		webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 //
 //		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * 90);
