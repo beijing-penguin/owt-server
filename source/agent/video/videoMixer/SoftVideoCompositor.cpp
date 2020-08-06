@@ -494,7 +494,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //		frame.additionalInfo.video.height = inputFrame->height();
 
 		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;Singelton::GetSingelton()
-		owt_base::FFmpegDrawText * local_m_textDrawer = owt_base::FFmpegDrawText::GetFFmpegDrawText();
+		owt_base::FFmpegDrawText *local_m_textDrawer = owt_base::FFmpegDrawText::GetFFmpegDrawText();
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=40:text='CPP welcome时信会议（字幕）'");
 
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='%{localtime}':x=w-tw:y=h-th");
