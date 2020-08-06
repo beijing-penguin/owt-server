@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <fstream>
-
+#include <string>
 #include <boost/make_shared.hpp>
 
 using namespace webrtc;
@@ -481,7 +481,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		frame.timeStamp = new_compositeFrame.timestamp();
 		frame.additionalInfo.video.width = new_compositeFrame.width();
 		frame.additionalInfo.video.height = new_compositeFrame.height();
-
+		//string str[3] = {"张三","李四", "王五"};
 //		m_textDrawer->drawFrame(frame);
 //
 //		owt_base::Frame frame;
@@ -496,7 +496,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;
 		owt_base::FFmpegDrawText * local_m_textDrawer = new owt_base::FFmpegDrawText();
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=40:text='CPP welcome时信会议（字幕）'");
-		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=40:text='%{localtime}':x=w-tw:y=h-th");
+
+		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='%{localtime}':x=w-tw:y=h-th");
+		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='草莓泡芙卷':x=w-tw:y=h-th");
 		local_m_textDrawer->enable(true);
 
 		local_m_textDrawer->drawFrame(frame);
