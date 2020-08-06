@@ -387,4 +387,15 @@ char *FFmpegDrawText::ff_err2str(int errRet)
     return m_errbuff;
 }
 
+// 饿汉模式的关键：初始化即实例化
+FFmpegDrawText *FFmpegDrawText::ffmpegDrawText = new FFmpegDrawText;
+
+FFmpegDrawText *FFmpegDrawText::GetFFmpegDrawText(){
+    // 不再需要进行实例化
+    //if(single == nullptr){
+    //    single = new Singelton;
+    //}
+    return ffmpegDrawText;
+}
+
 }//namespace owt_base

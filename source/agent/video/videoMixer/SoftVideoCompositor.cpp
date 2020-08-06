@@ -494,17 +494,17 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //		frame.additionalInfo.video.height = inputFrame->height();
 
 		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;Singelton::GetSingelton()
-		//FFmpegDrawText *local_m_textDrawer = FFmpegDrawText::GetFFmpegDrawText();
+		FFmpegDrawText *local_m_textDrawer = FFmpegDrawText::GetFFmpegDrawText();
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=40:text='CPP welcome时信会议（字幕）'");
 
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='%{localtime}':x=w-tw:y=h-th");
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='草莓泡芙卷':x=w-tw:y=h-th");
-		FFmpegDrawText::GetFFmpegDrawText()->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=5");
+		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=5");
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th");
 
-		FFmpegDrawText::GetFFmpegDrawText()->enable(true);
+		local_m_textDrawer->enable(true);
 
-		FFmpegDrawText::GetFFmpegDrawText()->drawFrame(frame);
+		local_m_textDrawer->drawFrame(frame);
 		//delete local_m_textDrawer;
 //		FILE *fp = fopen("yuvtext.yuv", "wb+");
 //		if (fp == NULL) {
