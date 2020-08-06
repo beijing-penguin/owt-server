@@ -35,7 +35,7 @@ public:
     int drawFrame(Frame&);
     int setText(std::string arg);
     void enable(bool enabled) {m_enabled = enabled;}
-
+    static FFmpegDrawText *GetFFmpegDrawText();
 protected:
     bool init(int width, int height);
     int configure(std::string arg);
@@ -45,6 +45,7 @@ protected:
     int copyFrame(Frame &dstFrame, AVFrame *srcAVFrame);
 
 private:
+    static FFmpegDrawText *ffmpegDrawText;
     AVFilterGraph *m_filter_graph;
     AVFilterContext *m_buffersink_ctx;
     AVFilterContext *m_buffersrc_ctx;
@@ -67,6 +68,16 @@ private:
     char m_errbuff[500];
     char *ff_err2str(int errRet);
 };
+// 饿汉模式的关键：初始化即实例化
+FFmpegDrawText *FFmpegDrawText::ffmpegDrawText = new FFmpegDrawText;
+
+FFmpegDrawText *FFmpegDrawText::GetFFmpegDrawText(){
+    // 不再需要进行实例化
+    //if(single == nullptr){
+    //    single = new Singelton;
+    //}
+    return ffmpegDrawText;
+}
 
 } /* namespace owt_base */
 
