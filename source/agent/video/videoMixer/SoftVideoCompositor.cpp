@@ -499,7 +499,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='%{localtime}':x=w-tw:y=h-th");
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='草莓泡芙卷':x=w-tw:y=h-th");
-		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=0");
+		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=5");
 		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th");
 
 		local_m_textDrawer->enable(true);
