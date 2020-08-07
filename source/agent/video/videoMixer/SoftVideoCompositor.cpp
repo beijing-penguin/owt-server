@@ -692,7 +692,11 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
 	 }
 	 fclose(fp);
 	ELOG_INFO("str2=%s",str2);
-    m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:textfile='/root/owt-server/dist/video_agent/drawtext/0'");
+
+	 char str3[300];
+	sprintf(str3,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:text=%s",str2);
+
+    m_markTextDrawer->setText(str3);
     m_markTextDrawer->enable(true);
 
     m_markTextDrawer->drawFrame(frame);
