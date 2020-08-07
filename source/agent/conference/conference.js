@@ -623,6 +623,7 @@ var Conference = function (rpcClient, selfRpcId) {
   };
 
   const updateStreamInfo = (streamId, info) => {
+	log.info("updateStreamInfo.info=",JSON.stringify(info));
     if (Stream.updateForwardStream(streams[streamId], info, room_config)) {
       room_config.notifying.streamChange &&
         sendMsg('room', 'all', 'stream', {id: streamId, status: 'update', data: {field: '.', value: Stream.toPortalFormat(streams[streamId])}});

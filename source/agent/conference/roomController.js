@@ -405,7 +405,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
     };
 
     var spreadStream = function (stream_id, target_node, target_node_type, on_ok, on_error) {
-        log.debug('spreadStream, stream_id:', stream_id, 'target_node:', target_node, 'target_node_type:', target_node_type);
+        log.info('spreadStream, stream_id:', stream_id, 'target_node:', target_node, 'target_node_type:', target_node_type);
 
         if (!streams[stream_id] || !terminals[streams[stream_id].owner]) {
             return on_error('Cannot spread a non-existing stream');
@@ -1425,7 +1425,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
     };
 
     that.publish = function (participantId, streamId, accessNode, streamInfo, streamType, on_ok, on_error) {
-        log.debug('publish, participantId: ', participantId, 'streamId:', streamId, 'accessNode:', accessNode.node, 'streamInfo:', JSON.stringify(streamInfo));
+        log.info('publish, participantId: ', participantId, 'streamId:', streamId, 'accessNode:', accessNode.node, 'streamInfo:', JSON.stringify(streamInfo));
         if (streams[streamId] === undefined) {
             var terminal_id = pubTermId(participantId, streamId);
             var terminal_owner = (streamType === 'webrtc' || streamType === 'sip') ? participantId : room_id + '-' + randomId();
