@@ -5,7 +5,7 @@
 'use strict';
 
 var MediaFrameMulticaster = require('../mediaFrameMulticaster/build/Release/mediaFrameMulticaster');
-
+var fs = require('fs')
 var logger = require('../logger').logger;
 
 // Logger
