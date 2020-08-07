@@ -455,7 +455,6 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
     	ELOG_INFO("it->input=%d!",it->input);
     	ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
-    	t->m
         boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
         if (inputFrame == NULL) {
             continue;
