@@ -478,12 +478,12 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
     	ELOG_INFO("it->input=%d!",it->input);
     	ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
-        boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-        if (inputFrame == NULL) {
+    	//boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
+    	rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
+        if (inputBuffer == NULL) {
             continue;
         }
-
-        rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+        //rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
         // Cube - draw mark text - begin
         char drawtext_dir[100];
@@ -807,7 +807,7 @@ bool SoftVideoCompositor::setAvatar(int input, const std::string& avatar)
 }
 bool SoftVideoCompositor::setFramedrawtext(int input, const std::string& framedrawtext)
 {
-	ELOG_INFO("setFramedrawtext========%s",framedrawtext);
+	ELOG_INFO("setFramedrawtext========%s",framedrawtext.c_str());
     return m_avatarManager->setFramedrawtext(input, framedrawtext);
 }
 
@@ -852,15 +852,17 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     return false;
 }
 
-boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int index)
+rtc::scoped_refptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(int index)
 {
-    boost::shared_ptr<webrtc::VideoFrame> src;
+	rtc::scoped_refptr<webrtc::VideoFrameBuffer> src;
 
     auto& input = m_inputs[index];
     if (input->isActive()) {
-        src = input->popInput();
+    	boost::shared_ptr<webrtc::VideoFrame> v_frame = input->popInput();
+    	src = v_frame->video_frame_buffer();
     } else {
-        src = m_avatarManager->getAvatarFrame(index);
+    	boost::shared_ptr<webrtc::VideoFrame> av_frame = m_avatarManager->getAvatarFrame(index);
+    	src = av_frame->video_frame_buffer();
     }
 
     return src;
