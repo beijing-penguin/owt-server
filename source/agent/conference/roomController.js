@@ -1439,7 +1439,8 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                                                                 framerate: streamInfo.video.framerate,
                                                                 subscribers: [],
                                                                 status: 'active'} : undefined,
-                                     spread: []
+                                     spread: [],
+										dcccccc:"publish dccc"
                                      };
                 terminals[terminal_id].published.push(streamId);
                 on_ok();
