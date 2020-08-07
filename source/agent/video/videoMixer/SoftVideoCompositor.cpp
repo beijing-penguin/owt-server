@@ -479,12 +479,14 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     	ELOG_INFO("it->input=%d!",it->input);
     	ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
     	//boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-    	boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-		if (inputFrame == NULL) {
-			continue;
-		}
+//    	boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
+//		if (inputFrame == NULL) {
+//			continue;
+//		}
+//
+//		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
-		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+    	boost::shared_ptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
 
         // Cube - draw mark text - begin
         char drawtext_dir[100];
@@ -864,7 +866,7 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
         src = m_avatarManager->getAvatarFrame(index);
     }
 
-    return src;
+    return src->video_frame_buffer();
 }
 
 void SoftVideoCompositor::drawText(const std::string& textSpec)
