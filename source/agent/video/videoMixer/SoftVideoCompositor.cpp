@@ -479,11 +479,12 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     	ELOG_INFO("it->input=%d!",it->input);
     	ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
     	//boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-    	rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
-        if (inputBuffer == NULL) {
-            continue;
-        }
-        //rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+    	boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
+		if (inputFrame == NULL) {
+			continue;
+		}
+
+		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
         // Cube - draw mark text - begin
         char drawtext_dir[100];
@@ -852,17 +853,15 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     return false;
 }
 
-rtc::scoped_refptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(int index)
+boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int index)
 {
-	rtc::scoped_refptr<webrtc::VideoFrameBuffer> src;
+    boost::shared_ptr<webrtc::VideoFrame> src;
 
     auto& input = m_inputs[index];
     if (input->isActive()) {
-    	boost::shared_ptr<webrtc::VideoFrame> v_frame = input->popInput();
-    	src = v_frame->video_frame_buffer();
+        src = input->popInput();
     } else {
-    	boost::shared_ptr<webrtc::VideoFrame> av_frame = m_avatarManager->getAvatarFrame(index);
-    	src = av_frame->video_frame_buffer();
+        src = m_avatarManager->getAvatarFrame(index);
     }
 
     return src;
