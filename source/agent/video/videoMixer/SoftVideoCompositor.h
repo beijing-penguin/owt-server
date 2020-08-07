@@ -110,6 +110,10 @@ public:
     void drawText(const std::string& textSpec);
     void clearText();
 
+    // Cube
+    void drawMarkText(const std::list<std::string>& markTextList);
+    void clearMarkText();
+
     void onTimeout() override;
 
 protected:
@@ -118,6 +122,9 @@ protected:
     static void layout_regions(SoftFrameGenerator *t, rtc::scoped_refptr<webrtc::I420Buffer> compositeBuffer, const LayoutSolution &regions);
 
     void reconfigureIfNeeded();
+
+    // Cube
+    void markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index);
 
 private:
     const webrtc::Clock *m_clock;
@@ -154,6 +161,10 @@ private:
     boost::shared_ptr<boost::thread_group> m_thrGrp;
 
     boost::shared_ptr<owt_base::FFmpegDrawText> m_textDrawer;
+
+    // Cube - mark text drawer
+    boost::shared_ptr<owt_base::FFmpegDrawText> m_markTextDrawer;
+    std::list<std::string> m_markTextList;
 };
 
 /**
@@ -195,7 +206,6 @@ private:
 
     std::vector<boost::shared_ptr<SoftInput>> m_inputs;
     boost::scoped_ptr<AvatarManager> m_avatarManager;
-    boost::shared_ptr<owt_base::FFmpegDrawText> m_textDrawer;
 };
 
 }

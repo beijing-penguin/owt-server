@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
+
 #include <boost/make_shared.hpp>
 
 using namespace webrtc;
@@ -301,6 +301,7 @@ SoftFrameGenerator::SoftFrameGenerator(
     }
 
     m_textDrawer.reset(new owt_base::FFmpegDrawText());
+    m_markTextDrawer.reset(new owt_base::FFmpegDrawText());
 
     m_jobTimer.reset(new JobTimer(m_maxSupportedFps, this));
     m_jobTimer->start();
@@ -450,108 +451,18 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     uint32_t composite_width = compositeBuffer->width();
     uint32_t composite_height = compositeBuffer->height();
 
+    int index = 0;
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
         boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-
-        //start draw-text
-
-		//frame--->inputFrame修改
-		//end draw-text
-
         if (inputFrame == NULL) {
             continue;
         }
-        //webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
 
-        //rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_compositeBuffer = generateFrame();
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
-//        rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_compositeBuffer = generateFrame();
-		webrtc::VideoFrame new_compositeFrame(
-				inputBuffer,
-				webrtc::kVideoRotation_0,
-				Clock::GetRealTimeClock()->TimeInMilliseconds()
-				);
-		new_compositeFrame.set_timestamp(new_compositeFrame.timestamp_us() * 90);
 
-		owt_base::Frame frame;
-		memset(&frame, 0, sizeof(frame));
-		frame.format = owt_base::FRAME_FORMAT_I420;
-		frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
-		frame.length = 0; // unused.
-		frame.timeStamp = new_compositeFrame.timestamp();
-		frame.additionalInfo.video.width = new_compositeFrame.width();
-		frame.additionalInfo.video.height = new_compositeFrame.height();
-		//string str[3] = {"张三","李四", "王五"};
-//		m_textDrawer->drawFrame(frame);
-//
-//		owt_base::Frame frame;
-//		memset(&frame, 0, sizeof(frame));
-//		frame.format = owt_base::FRAME_FORMAT_I420;
-//		frame.payload = reinterpret_cast<uint8_t*>(&inputFrame);
-//		frame.length = 0;
-//		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
-//		frame.additionalInfo.video.width = inputFrame->width();
-//		frame.additionalInfo.video.height = inputFrame->height();
-
-		//boost::shared_ptr<owt_base::FFmpegDrawText> local_m_textDrawer;Singelton::GetSingelton()
-		FFmpegDrawText *local_m_textDrawer = FFmpegDrawText::GetFFmpegDrawText();
-		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=red:fontsize=40:text='CPP welcome时信会议（字幕）'");
-
-		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='%{localtime}':x=w-tw:y=h-th");
-		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=60:text='草莓泡芙卷':x=w-tw:y=h-th");
-		local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=5");
-		//local_m_textDrawer->setText("fontfile=/usr/share/fonts/gnu-free/STSONG.TTF:fontcolor=0xFF4500:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th");
-
-		local_m_textDrawer->enable(true);
-
-		local_m_textDrawer->drawFrame(frame);
-		//delete local_m_textDrawer;
-//		FILE *fp = fopen("yuvtext.yuv", "wb+");
-//		if (fp == NULL) {
-//			//ELOG_INFO_T("file not exist");
-//			ELOG_INFO("file not exist");
-//		}else{
-//			ELOG_INFO("write yuv file");
-//		}
-//
-//
-//		ELOG_INFO("width=%d",inputFrame->width());
-//		ELOG_INFO("height=%d",inputFrame->height());
-//
-//		ELOG_INFO("length=%d", frame.length);
-
-		//uint32_t buflen = sizeof(uint8_t) * frame.length;
-
-//		fwrite(frame.payload, sizeof(uint8_t) , frame.length, fp );
-//
-//		fflush(fp);
-//
-//		fclose(fp);
-
-//		char * buf = malloc(buflen);
-//		memcpy(buf, frame.payload, buflen);
-//		fwrite(buf, buflen, 1, fp);
-//		free(buf);
-//		if (fp != NULL) {
-//			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
-//			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-//			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
-//			fflush(fp);
-//			fclose(fp);
-//		}
-
-//        char *image = new char [size];;
-//		in.read (image, size);
-//		in.close();
-//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
-//		            width, height,
-//		            reinterpret_cast<const uint8_t *>(image), width,
-//		            reinterpret_cast<const uint8_t *>(image + width * height), width / 2,
-//		            reinterpret_cast<const uint8_t *>(image + width * height * 5 / 4), width / 2
-//		            );
-//
-//		boost::shared_ptr<webrtc::VideoFrame> new_inputFrame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
-//		rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_inputBuffer = new_inputFrame->video_frame_buffer();
+        // Cube - draw mark text - begin
+        t->markFrame(inputBuffer, index++);
+        // Cube - draw mark text - end
 
         Region region = it->region;
         uint32_t dst_x      = (uint64_t)composite_width * region.area.rect.left.numerator / region.area.rect.left.denominator;
@@ -684,6 +595,30 @@ void SoftFrameGenerator::reconfigureIfNeeded()
     ELOG_DEBUG_T("reconfigure");
 }
 
+void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index)
+{
+    webrtc::VideoFrame new_compositeFrame(
+				inputBuffer,
+				webrtc::kVideoRotation_0,
+				Clock::GetRealTimeClock()->TimeInMilliseconds()
+				);
+    new_compositeFrame.set_timestamp(new_compositeFrame.timestamp_us() * 90);
+
+    owt_base::Frame frame;
+    memset(&frame, 0, sizeof(frame));
+    frame.format = owt_base::FRAME_FORMAT_I420;
+    frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
+    frame.length = 0; // unused.
+    frame.timeStamp = new_compositeFrame.timestamp();
+    frame.additionalInfo.video.width = new_compositeFrame.width();
+    frame.additionalInfo.video.height = new_compositeFrame.height();
+
+    m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+    m_markTextDrawer->enable(true);
+
+    m_markTextDrawer->drawFrame(frame);
+}
+
 void SoftFrameGenerator::drawText(const std::string& textSpec)
 {
     m_textDrawer->setText(textSpec);
@@ -693,6 +628,16 @@ void SoftFrameGenerator::drawText(const std::string& textSpec)
 void SoftFrameGenerator::clearText()
 {
     m_textDrawer->enable(false);
+}
+
+void SoftFrameGenerator::drawMarkText(const std::list<std::string>& markTextList)
+{
+    m_markTextDrawer->enable(true);
+}
+
+void SoftFrameGenerator::clearMarkText()
+{
+    m_markTextDrawer->enable(false);
 }
 
 DEFINE_LOGGER(SoftVideoCompositor, "mcu.media.SoftVideoCompositor");
@@ -710,7 +655,6 @@ SoftVideoCompositor::SoftVideoCompositor(uint32_t maxInput, VideoSize rootSize, 
     m_generators.resize(2);
     m_generators[0].reset(new SoftFrameGenerator(this, rootSize, bgColor, crop, 60, 15));
     m_generators[1].reset(new SoftFrameGenerator(this, rootSize, bgColor, crop, 48, 6));
-    m_textDrawer.reset(new owt_base::FFmpegDrawText());
 }
 
 SoftVideoCompositor::~SoftVideoCompositor()
@@ -795,6 +739,7 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     ELOG_ERROR("Can not removeOutput, dst(%p)", dst);
     return false;
 }
+
 boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int index)
 {
     boost::shared_ptr<webrtc::VideoFrame> src;
@@ -802,39 +747,6 @@ boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int ind
     auto& input = m_inputs[index];
     if (input->isActive()) {
         src = input->popInput();
-        ELOG_INFO_T("start draw_text-----------------------");
-        //src = m_avatarManager->getAvatarFrame(index);
-
-        //----------------------------start draw_text----------------------------
-        //TODO 添加文本
-        //rtc::scoped_refptr<webrtc::VideoFrameBuffer> compositeBuffer_drawtext = src->video_frame_buffer();
-
-        //uint32_t width = compositeBuffer_drawtext->width();
-        //ELOG_INFO_T("getInputFrame-width=%d", width);
-//		webrtc::VideoFrame compositeFrame( compositeBuffer_drawtext, webrtc::kVideoRotation_0, Clock::GetRealTimeClock()->TimeInMilliseconds());
-//
-//		compositeFrame.set_timestamp(compositeFrame.timestamp_us() * 90);
-//
-//		owt_base::Frame frame;
-//		memset(&frame, 0, sizeof(frame));
-//		frame.format = owt_base::FRAME_FORMAT_I420;
-//		frame.payload = reinterpret_cast<uint8_t*>(&compositeFrame);
-//		frame.length = 0; // unused.
-//		frame.timeStamp = Clock::GetRealTimeClock()->TimeInMilliseconds();
-//		frame.additionalInfo.video.width = compositeFrame.width();
-//		frame.additionalInfo.video.height = compositeFrame.height();
-//
-//		m_textDrawer->drawFrame(frame);
-//
-//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
-//		            width, height,
-//		            reinterpret_cast<const uint8_t *>(frame.payload), width,
-//		            reinterpret_cast<const uint8_t *>(frame.payload + width * height), width / 2,
-//		            reinterpret_cast<const uint8_t *>(frame.payload + width * height * 5 / 4), width / 2
-//		            );
-//		 boost::shared_ptr<webrtc::VideoFrame> webrtc_frame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
-//		 src = webrtc_frame;
-        //----------------------------end draw_text----------------------------
     } else {
         src = m_avatarManager->getAvatarFrame(index);
     }
