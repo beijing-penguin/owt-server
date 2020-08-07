@@ -675,7 +675,8 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     frame.additionalInfo.video.height = new_compositeFrame.height();
     char str[300];
     sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
-    m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+    //m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+    m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text=草莓泡芙卷:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
     m_markTextDrawer->enable(true);
 
     m_markTextDrawer->drawFrame(frame);
