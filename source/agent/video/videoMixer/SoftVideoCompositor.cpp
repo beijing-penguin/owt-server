@@ -461,16 +461,12 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
         // Cube - draw mark text - begin
-        char drawtext_dir[200];
+        char drawtext_dir[100];
         char suffix[50] = ".drawtext";
-        sprintf(drawtext_dir,"./drawtext/%d%s",123112311234,suffix);
-        if ( !access(drawtext_dir,0) ){
-        	ELOG_INFO("EXISITS!");
+        sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
+        if (!access(drawtext_dir,0) ){
+        	t->markFrame(inputBuffer, index++,it->input);
         }
-        if ( !access("./avatars/avatar_blue.160x120.yuv",0) ){
-        	ELOG_INFO("EXISITS!");
-        }
-        t->markFrame(inputBuffer, index++,it->input);
         // Cube - draw mark text - end
 
         Region region = it->region;
@@ -670,8 +666,9 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     frame.timeStamp = new_compositeFrame.timestamp();
     frame.additionalInfo.video.width = new_compositeFrame.width();
     frame.additionalInfo.video.height = new_compositeFrame.height();
-
-    m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:text='草莓泡芙卷':x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+    char str[300];
+    sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%d%s",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+    m_markTextDrawer->setText(str);
     m_markTextDrawer->enable(true);
 
     m_markTextDrawer->drawFrame(frame);
