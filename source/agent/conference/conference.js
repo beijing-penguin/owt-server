@@ -938,7 +938,7 @@ var Conference = function (rpcClient, selfRpcId) {
   };
 
   that.publish = function(participantId, streamId, pubInfo, callback) {
-    log.debug('publish, participantId:', participantId, 'streamId:', streamId, 'pubInfo:', JSON.stringify(pubInfo));
+    log.info('publish, participantId:', participantId, 'streamId:', streamId, 'pubInfo:', JSON.stringify(pubInfo));
     if (!accessController || !roomController) {
       return callback('callback', 'error', 'Controllers are not ready');
     }
@@ -1440,7 +1440,7 @@ var Conference = function (rpcClient, selfRpcId) {
   };
 
   that.streamControl = (participantId, streamId, command, callback) => {
-    log.debug('streamControl, participantId:', participantId, 'streamId:', streamId, 'command:', JSON.stringify(command));
+    log.info('streamControl, participantId:', participantId, 'streamId:', streamId, 'command:', JSON.stringify(command));
 
     if (!accessController || !roomController) {
       return callback('callback', 'error', 'Controllers are not ready');
