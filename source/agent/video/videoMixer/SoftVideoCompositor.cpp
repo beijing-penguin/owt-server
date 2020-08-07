@@ -179,6 +179,11 @@ bool AvatarManager::unsetAvatar(uint8_t index)
     return true;
 }
 
+std::string AvatarManager::getMyFramedrawtext(uint8_t index)
+{
+    return framedrawtext_inputs[index];
+}
+
 boost::shared_ptr<webrtc::VideoFrame> AvatarManager::getAvatarFrame(uint8_t index)
 {
     boost::unique_lock<boost::shared_mutex> lock(m_mutex);
@@ -196,10 +201,6 @@ boost::shared_ptr<webrtc::VideoFrame> AvatarManager::getAvatarFrame(uint8_t inde
     boost::shared_ptr<webrtc::VideoFrame> frame = loadImage(it->second);
     m_frames[it->second] = frame;
     return frame;
-}
-std::string AvatarManager::getFramedrawtext(uint8_t index)
-{
-    return framedrawtext_inputs[index];
 }
 
 DEFINE_LOGGER(SoftInput, "mcu.media.SoftVideoCompositor.SoftInput");
@@ -497,7 +498,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         char suffix[50] = ".drawtext";
         sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
 
-        std::string framedrawtext = t->m_owner->m_avatarManager.getFramedrawtext(it->input);
+        std::string framedrawtext = t->m_owner->m_avatarManager.getMyFramedrawtext(it->input);
         ELOG_INFO("framedrawtext======%s",framedrawtext);
         if (!access(drawtext_dir,0) ){
         	ELOG_INFO("drawtext_dir=%s EXISITS!",drawtext_dir);
