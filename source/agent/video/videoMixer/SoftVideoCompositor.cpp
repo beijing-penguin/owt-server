@@ -6,7 +6,7 @@
 
 #include "libyuv/convert.h"
 #include "libyuv/scale.h"
-
+#include <string.h>
 #include <iostream>
 #include <fstream>
 
@@ -677,8 +677,21 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
     //m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
 
-    /root/owt-server/dist/video_agent/drawtext/0
 
+
+	 char str2[300];
+	 char buf[1024];  /*缓冲区*/
+	 FILE *fp;            /*文件指针*/
+	 int len;             /*行字符个数*/
+	 if((fp = fopen("/root/owt-server/dist/video_agent/drawtext/0","r")) != NULL){
+		 while(fgets(buf,1024,fp) != NULL){
+			 len = strlen(buf);
+			 buf[len-1] = '\0';  /*去掉换行符*/
+			 sprintf(str2,"%s",buf);
+		 }
+	 }
+	 fclose(fp);
+	ELOG_INFO("str2=%s",str2);
     m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:textfile='/root/owt-server/dist/video_agent/drawtext/0'");
     m_markTextDrawer->enable(true);
 
