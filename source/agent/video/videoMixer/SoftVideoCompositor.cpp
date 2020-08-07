@@ -148,7 +148,7 @@ bool AvatarManager::setFramedrawtext(uint8_t index, const std::string &framedraw
         return true;
     }
     std::string old_url = it->second;
-    it->second = framedrawtext_inputs;
+    it->second = framedrawtext;
 
     //delete
     for (auto& it2 : framedrawtext_inputs) {
