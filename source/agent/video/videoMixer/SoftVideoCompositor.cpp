@@ -464,8 +464,12 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         char drawtext_dir[100];
         char suffix[50] = ".drawtext";
         sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
+
         if (!access(drawtext_dir,0) ){
+        	ELOG_INFO("drawtext_dir=%s EXISITS!",drawtext_dir);
         	t->markFrame(inputBuffer, index++,it->input);
+        }else{
+        	ELOG_INFO("drawtext_dir=%s DOESN'T EXISITS!",drawtext_dir);
         }
         // Cube - draw mark text - end
 
