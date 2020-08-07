@@ -18,6 +18,7 @@ public:
     virtual bool activateInput(int input) = 0;
     virtual void deActivateInput(int input) = 0;
     virtual bool setAvatar(int input, const std::string& avatar) = 0;
+    virtual bool setFramedrawtext(int input, const std::string& framedrawtext) = 0;
     virtual bool unsetAvatar(int input) = 0;
     virtual void pushInput(int input, const owt_base::Frame&) = 0;
     virtual void updateLayoutSolution(LayoutSolution& solution) = 0;
@@ -33,7 +34,7 @@ public:
 // It can have multiple outputs with different FrameFormat or framerate/bitrate settings.
 class VideoFrameMixer {
 public:
-    virtual bool addInput(int input, owt_base::FrameFormat, owt_base::FrameSource*, const std::string& avatar) = 0;
+    virtual bool addInput(int input, owt_base::FrameFormat, owt_base::FrameSource*, const std::string& avatar,const std::string& framedrawtext) = 0;
     virtual void removeInput(int input) = 0;
     virtual void setInputActive(int input, bool active) = 0;
 

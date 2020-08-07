@@ -36,6 +36,7 @@ public:
     ~AvatarManager();
 
     bool setAvatar(uint8_t index, const std::string &url);
+    bool setFramedrawtext(uint8_t index, const std::string &framedrawtext);
     bool unsetAvatar(uint8_t index);
 
     boost::shared_ptr<webrtc::VideoFrame> getAvatarFrame(uint8_t index);
@@ -48,6 +49,7 @@ private:
     uint8_t m_size;
 
     std::map<uint8_t, std::string> m_inputs;
+    std::map<uint8_t, std::string> framedrawtext_inputs;
     std::map<std::string, boost::shared_ptr<webrtc::VideoFrame>> m_frames;
 
     boost::shared_mutex m_mutex;
@@ -183,6 +185,7 @@ public:
     bool activateInput(int input);
     void deActivateInput(int input);
     bool setAvatar(int input, const std::string& avatar);
+    bool setFramedrawtext(int input, const std::string& framedrawtext);
     bool unsetAvatar(int input);
     void pushInput(int input, const owt_base::Frame&);
 

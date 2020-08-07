@@ -135,6 +135,29 @@ bool AvatarManager::setAvatar(uint8_t index, const std::string &url)
     return true;
 }
 
+bool AvatarManager::setFramedrawtext(uint8_t index, const std::string &framedrawtext)
+{
+    boost::unique_lock<boost::shared_mutex> lock(m_mutex);
+    auto it = framedrawtext_inputs.find(index);
+    if (it == framedrawtext_inputs.end()) {
+    	framedrawtext_inputs[index] = framedrawtext;
+        return true;
+    }
+
+    if (it->second == framedrawtext) {
+        return true;
+    }
+    std::string old_url = it->second;
+    it->second = framedrawtext_inputs;
+
+    //delete
+    for (auto& it2 : framedrawtext_inputs) {
+        if (old_url == it2.second)
+            return true;
+    }
+    m_frames.erase(old_url);
+    return true;
+}
 bool AvatarManager::unsetAvatar(uint8_t index)
 {
     boost::unique_lock<boost::shared_mutex> lock(m_mutex);
@@ -781,6 +804,10 @@ void SoftVideoCompositor::deActivateInput(int input)
 bool SoftVideoCompositor::setAvatar(int input, const std::string& avatar)
 {
     return m_avatarManager->setAvatar(input, avatar);
+}
+bool SoftVideoCompositor::setFramedrawtext(int input, const std::string& framedrawtext)
+{
+    return m_avatarManager->setFramedrawtext(input, framedrawtext);
 }
 
 bool SoftVideoCompositor::unsetAvatar(int input)

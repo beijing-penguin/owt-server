@@ -38,7 +38,7 @@ public:
     VideoMixer(const VideoMixerConfig& config);
     virtual ~VideoMixer();
 
-    bool addInput(const int inputIndex, const std::string& codec, owt_base::FrameSource* source, const std::string& avatar,const std::string& text);
+    bool addInput(const int inputIndex, const std::string& codec, owt_base::FrameSource* source, const std::string& avatar,const std::string& framedrawtext);
     void removeInput(const int inputIndex);
     void setInputActive(const int inputIndex, bool active);
     bool addOutput(const std::string& outStreamID

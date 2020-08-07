@@ -34,9 +34,10 @@ namespace mcu {
 class CompositeIn : public owt_base::FrameDestination
 {
 public:
-    CompositeIn(int index, const std::string& avatar, boost::shared_ptr<VideoFrameCompositor> compositor) : m_index(index), m_compositor(compositor) {
+    CompositeIn(int index, const std::string& avatar, const std::string& framedrawtext, boost::shared_ptr<VideoFrameCompositor> compositor) : m_index(index), m_compositor(compositor) {
         m_compositor->activateInput(m_index);
         m_compositor->setAvatar(m_index, avatar);
+        m_compositor->setFramedrawtext(m_index, framedrawtext);
     }
 
     virtual ~CompositeIn() {
@@ -58,7 +59,7 @@ public:
     VideoFrameMixerImpl(uint32_t maxInput, owt_base::VideoSize rootSize, owt_base::YUVColor bgColor, bool useSimulcast, bool crop);
     ~VideoFrameMixerImpl();
 
-    bool addInput(int input, owt_base::FrameFormat, owt_base::FrameSource*, const std::string& avatar);
+    bool addInput(int input, owt_base::FrameFormat, owt_base::FrameSource*, const std::string& avatar,const std::string& framedrawtext);
     void removeInput(int input);
     void setInputActive(int input, bool active);
 
@@ -138,7 +139,7 @@ VideoFrameMixerImpl::~VideoFrameMixerImpl()
     m_compositor.reset();
 }
 
-inline bool VideoFrameMixerImpl::addInput(int input, owt_base::FrameFormat format, owt_base::FrameSource* source, const std::string& avatar)
+inline bool VideoFrameMixerImpl::addInput(int input, owt_base::FrameFormat format, owt_base::FrameSource* source, const std::string& avatar, const std::string& framedrawtext)
 {
     assert(source);
 
@@ -164,7 +165,7 @@ inline bool VideoFrameMixerImpl::addInput(int input, owt_base::FrameFormat forma
         return false;
 
     if (decoder->init(format)) {
-        boost::shared_ptr<CompositeIn> compositorIn(new CompositeIn(input, avatar, m_compositor));
+        boost::shared_ptr<CompositeIn> compositorIn(new CompositeIn(input, avatar,framedrawtext, m_compositor));
 
         source->addVideoDestination(decoder.get());
         decoder->addVideoDestination(compositorIn.get());

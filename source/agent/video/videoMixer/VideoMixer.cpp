@@ -73,9 +73,9 @@ VideoMixer::~VideoMixer()
     closeAll();
 }
 
-bool VideoMixer::addInput(const int inputIndex, const std::string& codec, owt_base::FrameSource* source, const std::string& avatar, const std::string& text)
+bool VideoMixer::addInput(const int inputIndex, const std::string& codec, owt_base::FrameSource* source, const std::string& avatar, const std::string& framedrawtext)
 {
-	ELOG_INFO_T("VideoMixer::addInput: text=%s,inputIndex=%d", text.c_str(),inputIndex);
+	ELOG_INFO_T("VideoMixer::addInput: text=%s,inputIndex=%d", framedrawtext.c_str(),inputIndex);
     if (m_inputs.find(inputIndex) != m_inputs.end()) {
         ELOG_WARN("addInput already exist:%d", inputIndex);
         return false;
@@ -87,7 +87,7 @@ bool VideoMixer::addInput(const int inputIndex, const std::string& codec, owt_ba
 
     owt_base::FrameFormat format = getFormat(codec);
 
-    if (m_frameMixer->addInput(inputIndex, format, source, avatar)) {
+    if (m_frameMixer->addInput(inputIndex, format, source, avatar,framedrawtext)) {
         m_inputs.insert(inputIndex);
         return true;
     }
