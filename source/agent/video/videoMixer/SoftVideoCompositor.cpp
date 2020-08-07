@@ -179,10 +179,7 @@ bool AvatarManager::unsetAvatar(uint8_t index)
     return true;
 }
 
-std::string AvatarManager::getMyFramedrawtext(uint8_t index)
-{
-    return framedrawtext_inputs[index];
-}
+
 
 boost::shared_ptr<webrtc::VideoFrame> AvatarManager::getAvatarFrame(uint8_t index)
 {
@@ -472,6 +469,11 @@ rtc::scoped_refptr<webrtc::VideoFrameBuffer> SoftFrameGenerator::generateFrame()
 {
     reconfigureIfNeeded();
     return layout();
+}
+
+std::string AvatarManager::getMyFramedrawtext(uint8_t index)
+{
+    return framedrawtext_inputs[index];
 }
 
 void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refptr<webrtc::I420Buffer> compositeBuffer, const LayoutSolution &regions)
