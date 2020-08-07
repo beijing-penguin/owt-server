@@ -807,6 +807,7 @@ bool SoftVideoCompositor::setAvatar(int input, const std::string& avatar)
 }
 bool SoftVideoCompositor::setFramedrawtext(int input, const std::string& framedrawtext)
 {
+	ELOG_INFO("setFramedrawtext========%s",framedrawtext);
     return m_avatarManager->setFramedrawtext(input, framedrawtext);
 }
 
