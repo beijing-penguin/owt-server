@@ -230,6 +230,14 @@ function VMixer(rpcClient, clusterIP) {
             avatar = avatar || global.config.avatar.location;
 
             let inputId = inputManager.add(stream_id, codec, conn, avatar);
+
+			/*fs.writeFile('./message.txt', '这是第一行',function(err){ 
+
+  				if(err) console.log('写文件操作失败');   
+
+  				else console.log('写文件操作成功');
+
+			});*/
             if (inputId >= 0) {
                 if (engine.addInput(inputId, codec, conn, avatar,"aaaa中文")) {
                     layoutProcessor.addInput(inputId);
