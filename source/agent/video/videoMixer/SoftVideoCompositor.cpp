@@ -197,6 +197,10 @@ boost::shared_ptr<webrtc::VideoFrame> AvatarManager::getAvatarFrame(uint8_t inde
     m_frames[it->second] = frame;
     return frame;
 }
+std::string AvatarManager::getFramedrawtext(uint8_t index)
+{
+    return framedrawtext_inputs[index];
+}
 
 DEFINE_LOGGER(SoftInput, "mcu.media.SoftVideoCompositor.SoftInput");
 
@@ -479,67 +483,26 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     	ELOG_INFO("it->input=%d!",it->input);
     	ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
     	//boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-//    	boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
-//		if (inputFrame == NULL) {
-//			continue;
-//		}
-//
-//		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+    	boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
+		if (inputFrame == NULL) {
+			continue;
+		}
 
-    	rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
+		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
+
+    	//rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
 
         // Cube - draw mark text - begin
         char drawtext_dir[100];
         char suffix[50] = ".drawtext";
         sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
 
-
+        std::string framedrawtext = t->m_owner->m_avatarManager.getFramedrawtext(it->input);
+        ELOG_INFO("framedrawtext======%s",framedrawtext);
         if (!access(drawtext_dir,0) ){
         	ELOG_INFO("drawtext_dir=%s EXISITS!",drawtext_dir);
         	t->markFrame(inputBuffer, index++,it->input);
 
-//        	 webrtc::VideoFrame new_compositeFrame(
-//        					inputBuffer,
-//        					webrtc::kVideoRotation_0,
-//        					Clock::GetRealTimeClock()->TimeInMilliseconds()
-//        					);
-//			new_compositeFrame.set_timestamp(new_compositeFrame.timestamp_us() * 90);
-//
-//			owt_base::Frame frame;
-//			memset(&frame, 0, sizeof(frame));
-//			frame.format = owt_base::FRAME_FORMAT_I420;
-//			frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
-//			frame.length = 0; // unused.
-//			frame.timeStamp = new_compositeFrame.timestamp();
-//			frame.additionalInfo.video.width = new_compositeFrame.width();
-//			frame.additionalInfo.video.height = new_compositeFrame.height();
-//			char str[300];
-//			sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
-//			//m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
-//
-//			char filename[50];
-//			sprintf(filename,"./drawtext/%d.drawtext",stream_id);
-//
-//			 char str2[300];
-//			 char buf[1024];  /*缓冲区*/
-//			 FILE *fp;            /*文件指针*/
-//			 int len;             /*行字符个数*/
-//			 if((fp = fopen(filename,"r")) != NULL){
-//				 while(fgets(buf,1024,fp) != NULL){
-//					 len = strlen(buf);
-//					 sprintf(str2,"%s",buf);
-//				 }
-//			 }
-//			 fclose(fp);
-//			ELOG_INFO("str2=%s",str2);
-//
-//			 char str3[300];
-//			sprintf(str3,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:text=%s",str2);
-//
-//			m_markTextDrawer->setText(str3);
-//			m_markTextDrawer->enable(true);
-//
-//			m_markTextDrawer->drawFrame(frame);
         }else{
         	ELOG_INFO("drawtext_dir=%s DOESN'T EXISITS!",drawtext_dir);
         }
@@ -898,7 +861,7 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     return false;
 }
 
-rtc::scoped_refptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(int index)
+boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int index)
 {
     boost::shared_ptr<webrtc::VideoFrame> src;
 
@@ -909,7 +872,7 @@ rtc::scoped_refptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(
         src = m_avatarManager->getAvatarFrame(index);
     }
 
-    return src->video_frame_buffer();
+    return src;
 }
 
 void SoftVideoCompositor::drawText(const std::string& textSpec)

@@ -40,7 +40,7 @@ public:
     bool unsetAvatar(uint8_t index);
 
     boost::shared_ptr<webrtc::VideoFrame> getAvatarFrame(uint8_t index);
-
+    std::string getFramedrawtext(uint8_t index);
 protected:
     bool getImageSize(const std::string &url, uint32_t *pWidth, uint32_t *pHeight);
     boost::shared_ptr<webrtc::VideoFrame> loadImage(const std::string &url);
@@ -200,7 +200,7 @@ public:
     void clearText();
 
 protected:
-    rtc::scoped_refptr<webrtc::VideoFrameBuffer> getInputFrame(int index);
+    boost::shared_ptr<webrtc::VideoFrame> getInputFrame(int index);
 
 private:
     uint32_t m_maxInput;
