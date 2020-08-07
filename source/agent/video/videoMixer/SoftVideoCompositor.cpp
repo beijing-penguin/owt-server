@@ -455,7 +455,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
     	ELOG_INFO("it->input=%d!",it->input);
     	ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
-
+    	t->m
         boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
         if (inputFrame == NULL) {
             continue;
@@ -708,6 +708,7 @@ DEFINE_LOGGER(SoftVideoCompositor, "mcu.media.SoftVideoCompositor");
 SoftVideoCompositor::SoftVideoCompositor(uint32_t maxInput, VideoSize rootSize, YUVColor bgColor, bool crop)
     : m_maxInput(maxInput)
 {
+	ELOG_INFO("maxInput=%d",maxInput);
     m_inputs.resize(m_maxInput);
     for (auto& input : m_inputs) {
         input.reset(new SoftInput());
