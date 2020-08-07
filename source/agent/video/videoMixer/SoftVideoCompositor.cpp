@@ -898,7 +898,7 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     return false;
 }
 
-boost::shared_ptr<webrtc::VideoFrame> SoftVideoCompositor::getInputFrame(int index)
+boost::shared_ptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(int index)
 {
     boost::shared_ptr<webrtc::VideoFrame> src;
 
