@@ -39,6 +39,9 @@
             ],
             "avatars": [
                 "avatars/*"
+            ],
+            "drawtext": [
+                "drawtext/*"
             ]
         }
     },
