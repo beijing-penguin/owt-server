@@ -461,7 +461,16 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
         // Cube - draw mark text - begin
-        t->markFrame(inputBuffer, index++);
+        char drawtext_dir[200];
+        char suffix[50] = ".drawtext";
+        sprintf(drawtext_dir,"./drawtext/%d%s",123112311234,suffix);
+        if ( !access(drawtext_dir,0) ){
+        	ELOG_INFO("EXISITS!");
+        }
+        if ( !access("./avatars/avatar_blue.160x120.yuv",0) ){
+        	ELOG_INFO("EXISITS!");
+        }
+        t->markFrame(inputBuffer, index++,it->input);
         // Cube - draw mark text - end
 
         Region region = it->region;
@@ -595,7 +604,56 @@ void SoftFrameGenerator::reconfigureIfNeeded()
     ELOG_DEBUG_T("reconfigure");
 }
 
-void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index)
+// note------------------------------------------------
+//		FILE *fp = fopen("yuvtext.yuv", "wb+");
+//		if (fp == NULL) {
+//			//ELOG_INFO_T("file not exist");
+//			ELOG_INFO("file not exist");
+//		}else{
+//			ELOG_INFO("write yuv file");
+//		}
+//
+//
+//		ELOG_INFO("width=%d",inputFrame->width());
+//		ELOG_INFO("height=%d",inputFrame->height());
+//
+//		ELOG_INFO("length=%d", frame.length);
+
+		//uint32_t buflen = sizeof(uint8_t) * frame.length;
+
+//		fwrite(frame.payload, sizeof(uint8_t) , frame.length, fp );
+//
+//		fflush(fp);
+//
+//		fclose(fp);
+
+//		char * buf = malloc(buflen);
+//		memcpy(buf, frame.payload, buflen);
+//		fwrite(buf, buflen, 1, fp);
+//		free(buf);
+//		if (fp != NULL) {
+//			fwrite(inputBuffer->DataY(), 1, inputBuffer->height() * inputBuffer->width(), fp);
+//			fwrite(inputBuffer->DataU(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+//			fwrite(inputBuffer->DataV(), 1, inputBuffer->height() * inputBuffer->width() / 4, fp);
+//			fflush(fp);
+//			fclose(fp);
+//		}
+
+//        char *image = new char [size];;
+//		in.read (image, size);
+//		in.close();
+//		rtc::scoped_refptr<I420Buffer> i420Buffer = I420Buffer::Copy(
+//		            width, height,
+//		            reinterpret_cast<const uint8_t *>(image), width,
+//		            reinterpret_cast<const uint8_t *>(image + width * height), width / 2,
+//		            reinterpret_cast<const uint8_t *>(image + width * height * 5 / 4), width / 2
+//		            );
+//
+//		boost::shared_ptr<webrtc::VideoFrame> new_inputFrame(new webrtc::VideoFrame(i420Buffer, webrtc::kVideoRotation_0, 0));
+//		rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_inputBuffer = new_inputFrame->video_frame_buffer();
+
+
+void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id)
 {
     webrtc::VideoFrame new_compositeFrame(
 				inputBuffer,
