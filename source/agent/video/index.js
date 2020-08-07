@@ -236,8 +236,8 @@ function VMixer(rpcClient, clusterIP) {
   				else console.log('写文件操作成功');
 			});
             if (inputId >= 0) {
-                if (engine.addInput(stream_id, codec, conn, avatar,"aaaa中文")) {
-                    layoutProcessor.addInput(stream_id);
+                if (engine.addInput(inputId, codec, conn, avatar,"aaaa中文")) {
+                    layoutProcessor.addInput(inputId);
                     log.debug('addInput ok, stream_id:', stream_id, 'codec:', codec, 'options:', options);
                     on_ok(stream_id);
                 } else {
