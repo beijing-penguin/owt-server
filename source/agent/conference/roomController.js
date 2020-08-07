@@ -405,7 +405,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
     };
 
     var spreadStream = function (stream_id, target_node, target_node_type, on_ok, on_error) {
-        log.info('spreadStream, stream_id:', stream_id, 'target_node:', target_node, 'target_node_type:', target_node_type);
+        log.info('spreadStream, streams[stream_id]:', streams[stream_id], 'target_node:', target_node, 'target_node_type:', target_node_type);
 
         if (!streams[stream_id] || !terminals[streams[stream_id].owner]) {
             return on_error('Cannot spread a non-existing stream');
