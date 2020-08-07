@@ -486,7 +486,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //
 //		rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = inputFrame->video_frame_buffer();
 
-    	boost::shared_ptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
+    	rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer = t->m_owner->getInputFrame(it->input);
 
         // Cube - draw mark text - begin
         char drawtext_dir[100];
@@ -898,7 +898,7 @@ bool SoftVideoCompositor::removeOutput(owt_base::FrameDestination *dst)
     return false;
 }
 
-boost::shared_ptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(int index)
+rtc::scoped_refptr<webrtc::VideoFrameBuffer> SoftVideoCompositor::getInputFrame(int index)
 {
     boost::shared_ptr<webrtc::VideoFrame> src;
 

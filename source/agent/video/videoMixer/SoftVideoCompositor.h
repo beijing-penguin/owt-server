@@ -200,7 +200,7 @@ public:
     void clearText();
 
 protected:
-    boost::shared_ptr<webrtc::VideoFrameBuffer> getInputFrame(int index);
+    rtc::scoped_refptr<webrtc::VideoFrameBuffer> getInputFrame(int index);
 
 private:
     uint32_t m_maxInput;
