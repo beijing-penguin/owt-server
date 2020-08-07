@@ -218,6 +218,7 @@ module.exports.create = function(spec, rpcReq, onSessionEstablished, onSessionAb
         sessions[sessionId].locality = locality;
         var options = {
           controller: self_rpc_id,
+			avatar:"aaa",
 			dccc:"dc"
         };
         sessionOptions.connection && (options.connection = sessionOptions.connection);
