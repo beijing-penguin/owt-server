@@ -16,7 +16,7 @@ var mediaUtil = require('../mediaUtil');
 var calcDefaultBitrate = mediaUtil.calcDefaultBitrate;
 var resolution2String = mediaUtil.resolution2String;
 var isResolutionEqual = mediaUtil.isResolutionEqual;
-
+var arr_name = ["黑崎一护","朽木露琪亚","石田雨龙","黑崎一心","茶渡泰虎","井上织姬","浦原喜助"];
 const { LayoutProcessor } = require('./layout');
 
 var useHardware = global.config.video.hardwareAccelerated,
@@ -231,13 +231,10 @@ function VMixer(rpcClient, clusterIP) {
 
             let inputId = inputManager.add(stream_id, codec, conn, avatar);
 
-			/*fs.writeFile('./message.txt', '这是第一行',function(err){ 
-
+			fs.writeFile("./drawtext/"+inputId+".drawtext", arr_name[inputId],function(err){ 
   				if(err) console.log('写文件操作失败');   
-
   				else console.log('写文件操作成功');
-
-			});*/
+			});
             if (inputId >= 0) {
                 if (engine.addInput(inputId, codec, conn, avatar,"aaaa中文")) {
                     layoutProcessor.addInput(inputId);
