@@ -217,7 +217,8 @@ module.exports.create = function(spec, rpcReq, onSessionEstablished, onSessionAb
         }
         sessions[sessionId].locality = locality;
         var options = {
-          controller: self_rpc_id
+          controller: self_rpc_id,
+			dccc:"dc"
         };
         sessionOptions.connection && (options.connection = sessionOptions.connection);
         sessionOptions.media && (options.media = sessionOptions.media);
