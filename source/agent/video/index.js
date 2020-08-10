@@ -231,12 +231,12 @@ function VMixer(rpcClient, clusterIP) {
 
             let inputId = inputManager.add(stream_id, codec, conn, avatar);
 
-			fs.writeFile("./drawtext/"+inputId+".drawtext", arr_name[inputId],function(err){ 
+			/*fs.writeFile("./drawtext/"+inputId+".drawtext", arr_name[inputId],function(err){ 
   				if(err) console.log('写文件操作失败');   
   				else console.log('写文件操作成功');
-			});
+			});*/
             if (inputId >= 0) {
-                if (engine.addInput(inputId, codec, conn, avatar,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:text=测试"+inputId)) {
+                if (engine.addInput(inputId, codec, conn, avatar,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.8:boxborderw=8:text=测试"+arr_name[inputId])) {
                     layoutProcessor.addInput(inputId);
                     log.debug('addInput ok, stream_id:', stream_id, 'codec:', codec, 'options:', options);
                     on_ok(stream_id);
