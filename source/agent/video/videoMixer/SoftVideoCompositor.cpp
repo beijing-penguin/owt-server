@@ -690,7 +690,7 @@ void SoftFrameGenerator::reconfigureIfNeeded()
 //		rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_inputBuffer = new_inputFrame->video_frame_buffer();
 
 
-void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id)
+void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id,std::string& framedrawtext)
 {
     webrtc::VideoFrame new_compositeFrame(
 				inputBuffer,
@@ -707,30 +707,30 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     frame.timeStamp = new_compositeFrame.timestamp();
     frame.additionalInfo.video.width = new_compositeFrame.width();
     frame.additionalInfo.video.height = new_compositeFrame.height();
-    char str[300];
-    sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
-    //m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+//    char str[300];
+//    sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+//    //m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
+//
+//    char filename[50];
+//    sprintf(filename,"./drawtext/%d.drawtext",stream_id);
+//
+//	 char str2[300];
+//	 char buf[1024];  /*缓冲区*/
+//	 FILE *fp;            /*文件指针*/
+//	 int len;             /*行字符个数*/
+//	 if((fp = fopen(filename,"r")) != NULL){
+//		 while(fgets(buf,1024,fp) != NULL){
+//			 len = strlen(buf);
+//			 sprintf(str2,"%s",buf);
+//		 }
+//	 }
+//	 fclose(fp);
+//	ELOG_INFO("str2=%s",str2);
+//
+//	 char str3[300];
+//	sprintf(str3,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:text=%s",str2);
 
-    char filename[50];
-    sprintf(filename,"./drawtext/%d.drawtext",stream_id);
-
-	 char str2[300];
-	 char buf[1024];  /*缓冲区*/
-	 FILE *fp;            /*文件指针*/
-	 int len;             /*行字符个数*/
-	 if((fp = fopen(filename,"r")) != NULL){
-		 while(fgets(buf,1024,fp) != NULL){
-			 len = strlen(buf);
-			 sprintf(str2,"%s",buf);
-		 }
-	 }
-	 fclose(fp);
-	ELOG_INFO("str2=%s",str2);
-
-	 char str3[300];
-	sprintf(str3,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8:text=%s",str2);
-
-    m_markTextDrawer->setText(str3);
+    m_markTextDrawer->setText(framedrawtext);
     m_markTextDrawer->enable(true);
 
     m_markTextDrawer->drawFrame(frame);
