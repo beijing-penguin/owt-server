@@ -503,7 +503,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         ELOG_INFO("framedrawtext======%s",framedrawtext.c_str());
         if (!access(drawtext_dir,0) ){
         	ELOG_INFO("drawtext_dir=%s EXISITS!",drawtext_dir);
-        	t->markFrame(inputBuffer, index++,it->input);
+        	t->markFrame(inputBuffer, index++,it->input,framedrawtext);
 
         }else{
         	ELOG_INFO("drawtext_dir=%s DOESN'T EXISITS!",drawtext_dir);
