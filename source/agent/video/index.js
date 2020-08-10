@@ -16,7 +16,7 @@ var mediaUtil = require('../mediaUtil');
 var calcDefaultBitrate = mediaUtil.calcDefaultBitrate;
 var resolution2String = mediaUtil.resolution2String;
 var isResolutionEqual = mediaUtil.isResolutionEqual;
-var arr_name = ["朽木露琪亚","黑崎一护","石田雨龙","黑崎一心","茶渡泰虎","井上织姬","浦原喜助"];
+var arr_name = ["朽木露琪亚","黑崎一护","荻野千寻","汤婆婆","无脸男","井上织姬","浦原喜助","红细胞","白细胞"];
 const { LayoutProcessor } = require('./layout');
 
 var useHardware = global.config.video.hardwareAccelerated,
