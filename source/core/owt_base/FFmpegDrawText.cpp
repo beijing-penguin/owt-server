@@ -189,7 +189,7 @@ int FFmpegDrawText::configure(std::string arg)
 {
     int ret;
 
-    ELOG_INFO_T("config: %s", arg.c_str());
+    //ELOG_INFO_T("config: %s", arg.c_str());
 
     if (!m_filter_graph) {
         ELOG_TRACE_T("Invalid filter graph");
