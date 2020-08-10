@@ -16,7 +16,8 @@ var mediaUtil = require('../mediaUtil');
 var calcDefaultBitrate = mediaUtil.calcDefaultBitrate;
 var resolution2String = mediaUtil.resolution2String;
 var isResolutionEqual = mediaUtil.isResolutionEqual;
-var arr_name = ["朽木露琪亚","黑崎一护","荻野千寻","汤婆婆","无脸男","井上织姬","浦原喜助","红细胞","白细胞"];
+//var arr_name = ["朽木露琪亚","黑崎一护","荻野千寻","汤婆婆","无脸男","井上织姬","浦原喜助","木叶村:漩涡鸣人","宇智波佐助","旗木卡卡西"];
+var arr_name = ["自来也","漩涡鸣人","佩恩六道","宇智波鼬","旗木卡卡西","宇智波佐助","八神大蛇丸","宇智波斑","朽木露琪亚","黑崎一护","荻野千寻","汤婆婆","无脸男","井上织姬","浦原喜助"];
 const { LayoutProcessor } = require('./layout');
 
 var useHardware = global.config.video.hardwareAccelerated,
