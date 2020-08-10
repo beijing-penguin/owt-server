@@ -235,8 +235,11 @@ function VMixer(rpcClient, clusterIP) {
   				if(err) console.log('写文件操作失败');   
   				else console.log('写文件操作成功');
 			});*/
+			if (options.drawtext == null){
+				options.drawtext = "fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@1:boxborderw=8:text="+arr_name[inputId];
+			}
             if (inputId >= 0) {
-                if (engine.addInput(inputId, codec, conn, avatar,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@1:boxborderw=8:text="+arr_name[inputId])) {
+                if (engine.addInput(inputId, codec, conn, avatar,options.drawtext)) {
                     layoutProcessor.addInput(inputId);
                     log.debug('addInput ok, stream_id:', stream_id, 'codec:', codec, 'options:', options);
                     on_ok(stream_id);

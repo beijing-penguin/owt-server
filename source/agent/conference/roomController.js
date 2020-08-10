@@ -494,6 +494,10 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                     return;
                 }
                 var publisher = (terminals[stream_owner] ? terminals[stream_owner].owner : 'common');
+				var drawtext;
+				if(streams[stream_id].hasOwnProperty("drawtext")){
+					drawtext = streams[stream_id].drawtext;
+				}
                 makeRPC(
                     rpcClient,
                     target_node,
@@ -508,7 +512,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                             video: (video ? {codec: streams[stream_id].video.format} : false),
                             ip: from.ip,
                             port: from.port,
-							dccc: "dccc",
+							drawtext: drawtext,
                         }
                     ],
                     resolve,
@@ -1439,8 +1443,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                                                                 framerate: streamInfo.video.framerate,
                                                                 subscribers: [],
                                                                 status: 'active'} : undefined,
-                                     spread: [],
-										dcccccc:"publish dccc"
+                                     spread: []
                                      };
                 terminals[terminal_id].published.push(streamId);
                 on_ok();
