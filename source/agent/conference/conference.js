@@ -280,7 +280,7 @@ var Conference = function (rpcClient, selfRpcId) {
   var onSessionEstablished = (participantId, sessionId, direction, sessionInfo) => {
     log.debug('onSessionEstablished, participantId:', participantId, 'sessionId:', sessionId, 'direction:', direction, 'sessionInfo:', JSON.stringify(sessionInfo));
     if (direction === 'in') {
-      return addStream(sessionId, sessionInfo.locality, sessionInfo.media, sessionInfo.info
+      return addStream(sessionId, sessionInfo.locality, sessionInfo, sessionInfo.info
         ).then(() => {
           sendMsgTo(participantId, 'progress', {id: sessionId, status: 'ready'});
         }).catch((err) => {
@@ -588,7 +588,8 @@ var Conference = function (rpcClient, selfRpcId) {
     return false;
   };
 
-  const addStream = (id, locality, media, info) => {
+  const addStream = (id, locality, pubInfo, info) => {
+	var media = pubInfo.media;
     if (media.audio && (!room_config.mediaIn.audio.length || !isAudioFmtAcceptable(extractAudioFormat(media.audio), room_config.mediaIn.audio))) {
       return Promise.reject('Audio format unacceptable');
     }
@@ -600,7 +601,7 @@ var Conference = function (rpcClient, selfRpcId) {
     var isReadded = !!(streams[id] && !streams[id].isInConnecting);
 
     return new Promise((resolve, reject) => {
-      roomController && roomController.publish(info.owner, id, locality, media, info.type, function() {
+      roomController && roomController.publish(info.owner, id, locality, pubInfo, info.type, function() {
         if (participants[info.owner]) {
           var st = Stream.createForwardStream(id, media, info, room_config);
           st.info.inViews = [];
@@ -971,7 +972,7 @@ var Conference = function (rpcClient, selfRpcId) {
     }
 
     if (pubInfo.type === 'sip') {
-      return addStream(streamId, pubInfo.locality, pubInfo.media, {owner: participantId, type: 'sip'})
+      return addStream(streamId, pubInfo.locality, pubInfo, {owner: participantId, type: 'sip'})
       .then((result) => {
         callback('callback', result);
       })
@@ -980,7 +981,7 @@ var Conference = function (rpcClient, selfRpcId) {
       });
     } else if (pubInfo.type === 'analytics') {
       return addStream(streamId, pubInfo.locality,
-        pubInfo.media,
+        pubInfo,
         {owner: 'admin', type: 'analytics', analytics: pubInfo.analyticsId})
       .then((result) => {
         callback('callback', result);

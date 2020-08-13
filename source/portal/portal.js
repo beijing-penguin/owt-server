@@ -105,15 +105,62 @@ var Portal = function(spec, rpcReq) {
   };
 
   that.publish = function(participantId, streamId, pubInfo) {
-    log.debug('publish, participantId:', participantId, 'streamId:', streamId, 'pubInfo:', pubInfo);
-    if (participants[participantId] === undefined) {
-      return Promise.reject('Participant has NOT joined');
-    }
-
-    return rpcReq.publish(participants[participantId].controller,
-                          participantId,
-                          streamId,
-                          pubInfo);
+    log.info('publish, participantId:', participantId, 'streamId:', streamId, 'pubInfo:', pubInfo);
+	    return new Promise(function(resolve, reject) {
+	    	if (participants[participantId] === undefined) {
+	  	      return reject('Participant has NOT joined');
+	  	    }
+	  	   if(pubInfo.attributes && pubInfo.attributes.poster){
+	  		   log.info("请求头像pubInfo.attributes.poster="+pubInfo.attributes.poster);
+	  	    https.get(pubInfo.attributes.poster,function(req,res){  //path为网络图片地址
+	  	    	  var imgData = '';
+	  	    	  req.setEncoding('binary');
+	  	    	  req.on('data',function(chunk){
+	  	    	    imgData += chunk
+	  	    	  });
+	  	    	  var yuv_file_name = "avatar_"+streamId+".180x180.yuv";
+	  	    	  req.on('end',function(){
+	  			    fs.writeFile(streamId+".jpg",imgData, function(err){
+	  			      process.exec("/bin/bash -c \"source /etc/profile && ffmpeg -y -i "+streamId+".jpg"+" -pix_fmt yuv420p -s 180x180 "+yuv_file_name+" \"",function (error, stdout, stderr) {
+	  					if (error !== null) {
+	  						log.info('exec error: ' + error);
+	  					}else{
+	  						log.info("删除文件"+streamId+".jpg");
+	  					}
+	  					//删除文件
+  						process.exec("rm "+streamId+".jpg");
+  						
+  						//读取yuv文件
+  						let bitmap
+  						try{
+  						    bitmap = fs.readFileSync(yuv_file_name);
+  						}catch(e){
+  						    log.info("that.publish===>文件不存在");
+  						}
+  						//删除文件
+  						process.exec("rm "+yuv_file_name);
+  						if(bitmap){
+  							let base64str = Buffer.from(bitmap, 'binary').toString('base64');
+  							pubInfo.yuv_base64_str = base64str; 
+  						}
+  						
+  						resolve(rpcReq.publish(participants[participantId].controller,
+  		  		                 participantId,
+  		  		                 streamId,
+  		  		                 pubInfo));
+	  			      });
+	  			    });
+	  	    	  });
+	  	    	})
+	  	   }else{
+	  		 resolve(rpcReq.publish(participants[participantId].controller,
+		                 participantId,
+		                 streamId,
+		                 pubInfo));
+	  	   }
+	  	   
+	  	 
+	    });
   };
 
   that.unpublish = function(participantId, streamId) {

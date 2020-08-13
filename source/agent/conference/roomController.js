@@ -494,7 +494,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                     return;
                 }
                 var publisher = (terminals[stream_owner] ? terminals[stream_owner].owner : 'common');
-				var drawtext;
+				var drawtext = null;
 				//streams[stream_id].drawtext = "fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@1:boxborderw=8:text=测试";
 				if(streams[stream_id].hasOwnProperty("drawtext")){
 					drawtext = streams[stream_id].drawtext;
@@ -514,6 +514,7 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                             ip: from.ip,
                             port: from.port,
 							drawtext: drawtext,
+							yuv_base64_str:streams[stream_id].yuv_base64_str,
                         }
                     ],
                     resolve,
@@ -1429,8 +1430,9 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
         });
     };
 
-    that.publish = function (participantId, streamId, accessNode, streamInfo, streamType, on_ok, on_error) {
-        log.info('publish, participantId: ', participantId, 'streamId:', streamId, 'accessNode:', accessNode.node, 'streamInfo:', JSON.stringify(streamInfo));
+    that.publish = function (participantId, streamId, accessNode, pubInfo, streamType, on_ok, on_error) {
+		var streamInfo = pubInfo.media;
+        log.info('publish, participantId: ', participantId, 'streamId:', streamId, 'accessNode:', accessNode.node, 'streamInfo:', JSON.stringify(pubInfo));
         if (streams[streamId] === undefined) {
             var terminal_id = pubTermId(participantId, streamId);
             var terminal_owner = (streamType === 'webrtc' || streamType === 'sip') ? participantId : room_id + '-' + randomId();
@@ -1444,7 +1446,9 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                                                                 framerate: streamInfo.video.framerate,
                                                                 subscribers: [],
                                                                 status: 'active'} : undefined,
-                                     spread: []
+                                     spread: [],
+									drawtext:pubInfo.drawtext,
+									yuv_base64_str:pubInfo.yuv_base64_str
                                      };
                 terminals[terminal_id].published.push(streamId);
                 on_ok();
