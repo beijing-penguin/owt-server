@@ -500,8 +500,11 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //        sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
 
         std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
+        if(framedrawtext!=null){
+        	t->markFrame(inputBuffer, index++,it->input,framedrawtext);
+        }
         //ELOG_INFO("framedrawtext======%s",framedrawtext.c_str());
-        t->markFrame(inputBuffer, index++,it->input,framedrawtext);
+
 //        if (!access(drawtext_dir,0) ){
 //        	ELOG_INFO("drawtext_dir=%s EXISITS!",drawtext_dir);
 //
