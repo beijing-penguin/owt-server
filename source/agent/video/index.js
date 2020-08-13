@@ -236,7 +236,7 @@ function VMixer(rpcClient, clusterIP) {
   				if(err) console.log('写文件操作失败');   
   				else console.log('写文件操作成功');
 			});*/
-			if (options.drawtext == null){
+			if (!options.drawtext){
 				options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.5:boxborderw=8:text="+arr_name[inputId];
 			}
             if (inputId >= 0) {
