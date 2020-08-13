@@ -138,24 +138,7 @@ bool AvatarManager::setAvatar(uint8_t index, const std::string &url)
 bool AvatarManager::setFramedrawtext(uint8_t index, const std::string &framedrawtext)
 {
     boost::unique_lock<boost::shared_mutex> lock(m_mutex);
-    auto it = framedrawtext_inputs.find(index);
-    if (it == framedrawtext_inputs.end()) {
-    	framedrawtext_inputs[index] = framedrawtext;
-        return true;
-    }
-
-    if (it->second == framedrawtext) {
-        return true;
-    }
-    std::string old_url = it->second;
-    it->second = framedrawtext;
-
-    //delete
-    for (auto& it2 : framedrawtext_inputs) {
-        if (old_url == it2.second)
-            return true;
-    }
-    m_frames.erase(old_url);
+    framedrawtext_inputs[index] = framedrawtext;
     return true;
 }
 
