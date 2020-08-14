@@ -1,8 +1,6 @@
 [rabbit]
-host = "192.168.72.140" #default: "localhost"
+host = "localhost" #default: "localhost"
 port = 5672 #default: 5672
-login = "owt"
-password = "owt"
 
 [mongo]
 dataBaseURL = "localhost/owtdb" #default: "localhost/owtdb"
