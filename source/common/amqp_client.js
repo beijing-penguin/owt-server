@@ -318,7 +318,7 @@ module.exports = function() {
     };
 
     that.connect = function(options, on_ok, on_failure) {
-        log.debug('Connecting to rabbitMQ server:', options);
+        log.info('Connecting to rabbitMQ server:', options);
 
         var setupConnection = function(options) {
             /*
