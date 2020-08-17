@@ -32,10 +32,8 @@ regions = [] #default: [], which means all regions.
 
 
 [rabbit]
-host = "192.168.72.140" #default: "localhost"
+host = "localhost" #default: "localhost"
 port = 5672 #default: 5672
-login = "owt"
-password = "owt"
 
 [internal]
 #The IP address used for internal-cluster media spreading. Will use the IP got from the 'network_interface' item if 'ip_address' is not specified or equal to "".

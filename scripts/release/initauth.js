@@ -68,6 +68,7 @@ const updateRabbit = (cb) => {
           question(`(${authBase}) Enter password of rabbitmq: `)
             .then((password) => {
               mutableStdout.muted = false;
+				console.log("updateRabbit====PATH==="+authStore);
               saveAuth({ rabbit: { username, password } }, authStore, cb);
             });
           mutableStdout.muted = true;
