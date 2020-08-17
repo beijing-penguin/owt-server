@@ -465,8 +465,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 
     int index = 0;
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
-    	ELOG_INFO("composite_width===%d!",composite_width);
-    	ELOG_INFO("composite_height===%d!",composite_height);
+    	//ELOG_INFO("composite_width===%d!",composite_width);
+    	//ELOG_INFO("composite_height===%d!",composite_height);
     	//ELOG_INFO("t->m_owner->m_inputs[it->input]=%d!",t->m_owner->m_inputs[it->input]);
     	//boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
     	boost::shared_ptr<webrtc::VideoFrame> inputFrame = t->m_owner->getInputFrame(it->input);
@@ -698,8 +698,8 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     frame.timeStamp = new_compositeFrame.timestamp();
     frame.additionalInfo.video.width = composite_width;
     frame.additionalInfo.video.height = composite_height;
-    ELOG_INFO("frame.additionalInfo.video.width====%d",composite_width);
-    ELOG_INFO("frame.additionalInfo.video.height====%d",composite_height);
+    //ELOG_INFO("frame.additionalInfo.video.width====%d",composite_width);
+    //ELOG_INFO("frame.additionalInfo.video.height====%d",composite_height);
 //    char str[300];
 //    sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
 //    //m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
