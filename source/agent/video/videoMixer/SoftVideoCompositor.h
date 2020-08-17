@@ -126,7 +126,7 @@ protected:
     void reconfigureIfNeeded();
 
     // Cube
-    void markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id,std::string& framedrawtext);
+    void markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id,std::string& framedrawtext,uint32_t composite_width,uint32_t composite_height);
 
 private:
     const webrtc::Clock *m_clock;

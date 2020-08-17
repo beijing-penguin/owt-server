@@ -488,7 +488,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         //ELOG_INFO("layout_regions.framedrawtext========%s",framedrawtext.c_str());
         if(framedrawtext != "null"){
         	//ELOG_INFO("join if===layout_regions.framedrawtext========%s",framedrawtext.c_str());
-        	t->markFrame(inputBuffer, index++,it->input,framedrawtext);
+        	t->markFrame(inputBuffer, index++,it->input,framedrawtext,composite_width,composite_height);
         }
         //ELOG_INFO("framedrawtext======%s",framedrawtext.c_str());
 
@@ -681,7 +681,7 @@ void SoftFrameGenerator::reconfigureIfNeeded()
 //		rtc::scoped_refptr<webrtc::VideoFrameBuffer> new_inputBuffer = new_inputFrame->video_frame_buffer();
 
 
-void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id,std::string& framedrawtext)
+void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> inputBuffer, int index,int stream_id,std::string& framedrawtext,uint32_t composite_width,uint32_t composite_height)
 {
     webrtc::VideoFrame new_compositeFrame(
 				inputBuffer,
@@ -696,10 +696,10 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
     frame.length = 0; // unused.
     frame.timeStamp = new_compositeFrame.timestamp();
-    frame.additionalInfo.video.width = new_compositeFrame.width();
-    frame.additionalInfo.video.height = new_compositeFrame.height();
-    ELOG_INFO("frame.additionalInfo.video.width====%d",new_compositeFrame.width());
-    ELOG_INFO("frame.additionalInfo.video.height====%d",new_compositeFrame.height());
+    frame.additionalInfo.video.width = composite_width;
+    frame.additionalInfo.video.height = composite_height;
+    ELOG_INFO("frame.additionalInfo.video.width====%d",composite_width);
+    ELOG_INFO("frame.additionalInfo.video.height====%d",composite_height);
 //    char str[300];
 //    sprintf(str,"fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=%s/%d%s%s","./drawtext",stream_id,".drawtext",":x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
 //    //m_markTextDrawer->setText("fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:textfile=/root/owt-server/dist/video_agent/drawtext/0.drawtext:x=w-tw:y=h-th:box=1:boxcolor=black@0.6:boxborderw=8");
