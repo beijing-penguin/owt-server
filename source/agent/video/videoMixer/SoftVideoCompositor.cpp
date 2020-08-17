@@ -696,8 +696,8 @@ void SoftFrameGenerator::markFrame(rtc::scoped_refptr<webrtc::VideoFrameBuffer> 
     frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
     frame.length = 0; // unused.
     frame.timeStamp = new_compositeFrame.timestamp();
-    frame.additionalInfo.video.width = composite_width;
-    frame.additionalInfo.video.height = composite_height;
+    frame.additionalInfo.video.width = 1280;
+    frame.additionalInfo.video.height = 960;
     ELOG_INFO("frame.additionalInfo.video.width====%d",composite_width);
     ELOG_INFO("frame.additionalInfo.video.height====%d",composite_height);
 //    char str[300];
