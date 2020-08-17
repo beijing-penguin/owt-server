@@ -228,7 +228,9 @@ var V11Client = function(clientId, sigConnection, portal) {
         return result.data;
       })
   };
-
+	that.rejoin = function(roomId){
+	  return portal.rejoin(clientId, roomId);
+  }
   that.leave = () => {
     if(that.inRoom) {
       return portal.leave(that.id).catch(() => {

@@ -196,7 +196,13 @@ var Connection = function(spec, socket, reconnectionKey, portal, dock) {
         });
     });
 
-    socket.on('relogin', function(reconnectionTicket, callback) {
+	function isJson(obj){
+    	var isjson = typeof(obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length; 
+    	return isjson;
+    }
+
+    socket.on('relogin', function(reloginInfo, callback) {
+		var reqJson = isJson(reloginInfo);
       if (state !== 'initialized') {
         return safeCall(callback, 'error', 'Connection is in service');
       }
@@ -205,7 +211,11 @@ var Connection = function(spec, socket, reconnectionKey, portal, dock) {
       var client;
       var reconnection_ticket;
       new Promise((resolve) => {
-        resolve(JSON.parse((new Buffer(reconnectionTicket, 'base64')).toString()));
+        if(reqJson){
+    		  resolve(JSON.parse((new Buffer(reloginInfo.ticket, 'base64')).toString()));
+    	  }else{
+    		  resolve(JSON.parse((new Buffer(reloginInfo, 'base64')).toString()));
+    	  }
       }).then((ticket) => {
         var now = Date.now();
         if (ticket.notBefore > now || ticket.notAfter < now) {
@@ -237,8 +247,27 @@ var Connection = function(spec, socket, reconnectionKey, portal, dock) {
       }).then(() => {
         let ticket = generateReconnectionTicket();
         state = 'connected';
-        safeCall(callback, okWord(), ticket);
-        drainPendingMessages();
+        if(reqJson){
+	        //获取房间信息
+	        client.rejoin(reloginInfo.roomId).then(function(room_info){
+	        	
+	        	room_info.reconnectionTicket = ticket;
+	        	log.info('room_info====', room_info);
+	        	//safeCall(callback, okWord(), ticket);
+	            safeCall(callback, okWord(), room_info);
+	            drainPendingMessages();
+	        }).catch((err) => {
+	            state = 'initialized';
+	            const err_message = getErrorMessage(err);
+	            log.info('Relogin failed:', err_message);
+	            safeCall(callback, 'error', err_message);
+	            forceClientLeave();
+	            socket.disconnect();
+	          });
+        }else{
+        	safeCall(callback, okWord(), ticket);
+            drainPendingMessages();
+        }
       }).catch((err) => {
         state = 'initialized';
         const err_message = getErrorMessage(err);

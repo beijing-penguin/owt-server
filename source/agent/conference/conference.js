@@ -905,6 +905,45 @@ var Conference = function (rpcClient, selfRpcId) {
       });
   };
 
+	that.testReq = function(room_id,callback) {
+//	  var my_role_def = room_config.roles.filter((roleDef) => {return roleDef.role === participantInfo.role;});
+//      if (my_role_def.length < 1) {
+//        callback('callback', 'error', 'Invalid role');
+//        return Promise.reject('Invalid role');
+//      }
+//
+//      permission = {
+//        publish: my_role_def[0].publish,
+//        subscribe: my_role_def[0].subscribe
+//      };
+	  var current_participants = [],
+      current_streams = [];
+
+	  for (var participant_id in participants) {
+		  if (participant_id !== 'admin') {
+	            current_participants.push(participants[participant_id].getInfo());
+	          }
+	  }
+	  
+	  for (var stream_id in streams) {
+          if (!streams[stream_id].isInConnecting) {
+            current_streams.push(Stream.toPortalFormat(streams[stream_id]));
+          }
+        }
+	  
+	  
+	  callback('callback', {
+          permission: room_config.roles,
+          room: {
+            id: room_id,
+            views: room_config.views.map((viewSettings) => {return viewSettings.label;}),
+            participants: current_participants,
+            streams: current_streams
+          }
+        });
+	  callback('callback', room_config);
+  };
+
   that.leave = function(participantId, callback) {
     log.info('leave, participantId:', participantId);
     if (!accessController || !roomController) {
@@ -2495,6 +2534,7 @@ module.exports = function (rpcClient, selfRpcId, parentRpcId, clusterWorkerIP) {
   that.rpcAPI = {
     // rpc from Portal and sip-node.
     join: conference.join,
+	testReq: conference.testReq,
     leave: conference.leave,
     text: conference.text,
     publish: conference.publish,

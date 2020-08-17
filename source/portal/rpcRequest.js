@@ -17,7 +17,9 @@ var RpcRequest = function(rpcChannel) {
   that.join = function(controller, roomId, participant) {
     return rpcChannel.makeRPC(controller, 'join', [roomId, participant], 6000);
   };
-
+  that.testReq = function(controller,roomId) {
+	  return rpcChannel.makeRPC(controller, 'testReq',[roomId], 6000);
+  };
   that.leave = function(controller, participantId) {
     return rpcChannel.makeRPC(controller, 'leave', [participantId]);
   };

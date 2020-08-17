@@ -90,6 +90,19 @@ var Portal = function(spec, rpcReq) {
       });
   };
 
+
+	that.rejoin = function(participantId, roomId) {
+	  log.info('rejoin=rejoin进入=======participant[', participantId, '] join with roomId:', JSON.stringify(roomId));
+	  return rpcReq.getController(cluster_name, roomId).then(function(controller) {
+		  log.info("rejoin===controller==",controller);
+		  
+		  return rpcReq.testReq(controller,roomId);
+	  }).then(function(room_config){
+    	log.info('room_config====', JSON.stringify(room_config));
+    	room_config.id = participantId;
+    	return room_config;
+      });
+  };
   that.leave = function(participantId) {
     log.debug('participant leave:', participantId);
     if (participants[participantId]) {
