@@ -238,7 +238,7 @@ function VMixer(rpcClient, clusterIP) {
 			});*/
 			if (!options.drawtext && arr_name[inputId]){
 				//options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.5:boxborderw=8:text="+arr_name[inputId];
-				options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=0xFF4500:fontsize=50:text='时信会议':x=w-tw:y=h-th"
+				options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=0xFF4500:fontsize=50:text='abc':x=w-tw:y=h-th"
 			}
             if (inputId >= 0) {
                 if (engine.addInput(inputId, codec, conn, avatar,options.drawtext)) {
