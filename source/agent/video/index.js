@@ -227,8 +227,14 @@ function VMixer(rpcClient, clusterIP) {
             }
             conn.connect(options);
 
-            // Use default avatar if it is not set
-            avatar = avatar || global.config.avatar.location;
+			if(options.yuv_base64_str){
+				let bitmap1 = Buffer.from(base64str, 'base64');//解码图片
+				fs.writeFileSync("avatars/avatar_"+stream_id+".180x180.yuv",bitmap1);
+				avatar = "avatars/avatar_"+stream_id+".180x180.yuv";
+			}else{
+				// Use default avatar if it is not set
+            	avatar = global.config.avatar.location;
+			}
 
             let inputId = inputManager.add(stream_id, codec, conn, avatar);
 
