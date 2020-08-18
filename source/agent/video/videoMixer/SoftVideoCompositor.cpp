@@ -522,13 +522,13 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 			}
 		}
 
-        std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
+        //std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
 
         //ELOG_INFO("layout_regions.framedrawtext========%s",framedrawtext.c_str());
-        if(framedrawtext != "null"){
-        	//ELOG_INFO("join if===layout_regions.framedrawtext========%s",framedrawtext.c_str());
-        	t->markFrame(inputBuffer, index++,it->input,framedrawtext,composite_width,composite_height);
-        }
+//        if(framedrawtext != "null"){
+//        	//ELOG_INFO("join if===layout_regions.framedrawtext========%s",framedrawtext.c_str());
+//        	t->markFrame(inputBuffer, index++,it->input,framedrawtext,composite_width,composite_height);
+//        }
         //ELOG_INFO("framedrawtext======%s",framedrawtext.c_str());
 
 //        if (!access(drawtext_dir,0) ){
