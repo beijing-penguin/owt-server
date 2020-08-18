@@ -483,6 +483,45 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //        char suffix[50] = ".drawtext";
 //        sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
 
+		std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
+		if(framedrawtext != "null"){
+			rtc::scoped_refptr<webrtc::VideoFrameBuffer> gen_compositeBuffer = t->generateFrame();
+			if (compositeBuffer) {
+				webrtc::VideoFrame gen_compositeFrame(
+						gen_compositeBuffer,
+						webrtc::kVideoRotation_0,
+						t->m_clock->TimeInMilliseconds()
+						);
+				gen_compositeFrame.set_timestamp(gen_compositeFrame.timestamp_us() * t->kMsToRtpTimestamp);
+
+				owt_base::Frame frame;
+				memset(&frame, 0, sizeof(frame));
+				frame.format = owt_base::FRAME_FORMAT_I420;
+				frame.payload = reinterpret_cast<uint8_t*>(&gen_compositeFrame);
+				frame.length = 0; // unused.
+				frame.timeStamp = gen_compositeFrame.timestamp();
+				frame.additionalInfo.video.width = composite_width;
+				frame.additionalInfo.video.height = composite_height;
+
+				t->m_markTextDrawer->setText(framedrawtext);
+				t->m_markTextDrawer->enable(true);
+
+				t->m_markTextDrawer->drawFrame(frame);
+
+				{
+					boost::unique_lock<boost::shared_mutex> lock(t->m_outputMutex);
+					for (uint32_t i = 0; i <  t->m_outputs.size(); i++) {
+						if (t->m_counter % (i + 1))
+							continue;
+
+						for (auto itt = t->m_outputs[i].begin(); itt != t->m_outputs[i].end(); ++itt) {
+							itt->dest->onFrame(frame);
+						}
+					}
+				}
+			}
+		}
+
         std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
 
         //ELOG_INFO("layout_regions.framedrawtext========%s",framedrawtext.c_str());
