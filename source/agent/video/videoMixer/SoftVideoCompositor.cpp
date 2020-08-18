@@ -508,17 +508,8 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 				t->m_markTextDrawer->enable(true);
 
 				t->m_markTextDrawer->drawFrame(frame);
-
-				{
-					boost::unique_lock<boost::shared_mutex> lock(t->m_outputMutex);
-					for (uint32_t i = 0; i <  t->m_outputs.size(); i++) {
-						if (t->m_counter % (i + 1))
-							continue;
-
-						for (auto itt = t->m_outputs[i].begin(); itt != t->m_outputs[i].end(); ++itt) {
-							itt->dest->onFrame(frame);
-						}
-					}
+				for (auto itt = t->m_outputs[it->input].begin(); itt != t->m_outputs[it->input].end(); ++itt) {
+					itt->dest->onFrame(frame);
 				}
 			}
 		}
