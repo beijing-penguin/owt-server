@@ -487,6 +487,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 		if(framedrawtext != "null"){
 			rtc::scoped_refptr<webrtc::VideoFrameBuffer> gen_compositeBuffer = t->generateFrame();
 			if (gen_compositeBuffer) {
+				inputBuffer = gen_compositeBuffer;
 				webrtc::VideoFrame gen_compositeFrame(
 						gen_compositeBuffer,
 						webrtc::kVideoRotation_0,
@@ -559,21 +560,21 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         uint32_t src_width;
         uint32_t src_height;
         if (t->m_crop) {
-            src_width   = std::min((uint32_t)gen_compositeBuffer->width(), dst_width * gen_compositeBuffer->height() / dst_height);
-            src_height  = std::min((uint32_t)gen_compositeBuffer->height(), dst_height * gen_compositeBuffer->width() / dst_width);
-            src_x       = (gen_compositeBuffer->width() - src_width) / 2;
-            src_y       = (gen_compositeBuffer->height() - src_height) / 2;
+            src_width   = std::min((uint32_t)inputBuffer->width(), dst_width * inputBuffer->height() / dst_height);
+            src_height  = std::min((uint32_t)inputBuffer->height(), dst_height * inputBuffer->width() / dst_width);
+            src_x       = (inputBuffer->width() - src_width) / 2;
+            src_y       = (inputBuffer->height() - src_height) / 2;
 
             cropped_dst_width   = dst_width;
             cropped_dst_height  = dst_height;
         } else {
-            src_width   = gen_compositeBuffer->width();
-            src_height  = gen_compositeBuffer->height();
+            src_width   = inputBuffer->width();
+            src_height  = inputBuffer->height();
             src_x       = 0;
             src_y       = 0;
 
-            cropped_dst_width   = std::min(dst_width, gen_compositeBuffer->width() * dst_height / gen_compositeBuffer->height());
-            cropped_dst_height  = std::min(dst_height, gen_compositeBuffer->height() * dst_width / gen_compositeBuffer->width());
+            cropped_dst_width   = std::min(dst_width, inputBuffer->width() * dst_height / inputBuffer->height());
+            cropped_dst_height  = std::min(dst_height, inputBuffer->height() * dst_width / inputBuffer->width());
         }
 
         dst_x += (dst_width - cropped_dst_width) / 2;
@@ -589,9 +590,9 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
         cropped_dst_height  &= ~1;
 
         int ret = libyuv::I420Scale(
-        		gen_compositeBuffer->DataY() + src_y * gen_compositeBuffer->StrideY() + src_x, gen_compositeBuffer->StrideY(),
-				gen_compositeBuffer->DataU() + (src_y * gen_compositeBuffer->StrideU() + src_x) / 2, gen_compositeBuffer->StrideU(),
-				gen_compositeBuffer->DataV() + (src_y * gen_compositeBuffer->StrideV() + src_x) / 2, gen_compositeBuffer->StrideV(),
+                inputBuffer->DataY() + src_y * inputBuffer->StrideY() + src_x, inputBuffer->StrideY(),
+                inputBuffer->DataU() + (src_y * inputBuffer->StrideU() + src_x) / 2, inputBuffer->StrideU(),
+                inputBuffer->DataV() + (src_y * inputBuffer->StrideV() + src_x) / 2, inputBuffer->StrideV(),
                 src_width, src_height,
                 compositeBuffer->MutableDataY() + dst_y * compositeBuffer->StrideY() + dst_x, compositeBuffer->StrideY(),
                 compositeBuffer->MutableDataU() + (dst_y * compositeBuffer->StrideU() + dst_x) / 2, compositeBuffer->StrideU(),
