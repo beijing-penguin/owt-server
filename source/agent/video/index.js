@@ -244,7 +244,7 @@ function VMixer(rpcClient, clusterIP) {
 			});*/
 			if (!options.drawtext && arr_name[inputId]){
 				//options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.5:boxborderw=8:text="+arr_name[inputId];
-				options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/FreeSerif.ttf:fontcolor=white:fontsize=50:x=w-tw:y=h-th:text=yinwen_ceshi";
+				//options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/FreeSerif.ttf:fontcolor=white:fontsize=50:x=w-tw:y=h-th:text=yinwen_ceshi";
 			}
             if (inputId >= 0) {
                 if (engine.addInput(inputId, codec, conn, avatar,options.drawtext)) {
@@ -291,7 +291,7 @@ function VMixer(rpcClient, clusterIP) {
     };
 
     var addOutput = function (codec, resolution, framerate, bitrate, keyFrameInterval, on_ok, on_error) {
-        engine.drawText("fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=0xFF4500:fontsize=50:text='时信会议':x=0:y=0");
+        //engine.drawText("fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=0xFF4500:fontsize=50:text='时信会议':x=0:y=0");
 		log.info('addOutput: codec', codec, 'resolution:', resolution, 'framerate:', framerate, 'bitrate:', bitrate, 'keyFrameInterval:', keyFrameInterval);
         if (engine) {
             var stream_id = Math.random() * 1000000000000000000 + '';
