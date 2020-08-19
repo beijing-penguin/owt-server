@@ -216,7 +216,7 @@ function VMixer(rpcClient, clusterIP) {
         connections = {};
 
     var addInput = function (stream_id, codec, options, avatar, on_ok, on_error) {
-        log.debug('add input', stream_id);
+        log.info('add input', stream_id,",,,options.drawtext===",options.drawtext);
         // FIXME: filter profile setting for native layer
         codec = codec.indexOf('h264') > -1 ? 'h264' : codec;
         if (engine) {
