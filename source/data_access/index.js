@@ -32,6 +32,9 @@ var setupConnection = function () {
   mongoose.connection.on('error', function(err) {
     console.log(err.message);
   });
+  mongoose.connection.on('connected', function(err) {
+    console.log("Mongoose connection success");
+  });
 };
 
 if (fs.existsSync(cipher.astore)) {
