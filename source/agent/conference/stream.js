@@ -334,7 +334,7 @@ function createForwardStream(id, media, info, roomConfig) {
 
 function updateForwardStream(stream, info, roomConfig) {
   if (stream && stream.type === 'forward' && info) {
-    if (info.video && stream.media.video) {
+    if (info.video && stream.media && stream.media.video) {
       if (info.video.parameters) {
         if (info.video.parameters.resolution) {
           stream.media.video.parameters = (stream.media.video.parameters || {});
