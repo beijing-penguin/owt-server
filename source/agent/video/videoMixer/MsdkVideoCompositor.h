@@ -238,6 +238,8 @@ public:
     bool unsetAvatar(int input);
     void pushInput(int input, const owt_base::Frame& frame);
 
+    bool setFramedrawtext(int input, const std::string& framedrawtext);
+
     void updateRootSize(owt_base::VideoSize& rootSize);
     void updateBackgroundColor(owt_base::YUVColor& bgColor);
     void updateLayoutSolution(LayoutSolution& solution);

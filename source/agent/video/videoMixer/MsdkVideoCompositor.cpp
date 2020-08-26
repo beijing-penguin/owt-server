@@ -136,6 +136,12 @@ bool MsdkAvatarManager::setAvatar(uint8_t index, const std::string &url)
     return true;
 }
 
+bool SoftVideoCompositor::setFramedrawtext(int input, const std::string& framedrawtext)
+{
+	ELOG_INFO("setFramedrawtext========%s",framedrawtext.c_str());
+    return m_avatarManager->setFramedrawtext(input, framedrawtext);
+}
+
 bool MsdkAvatarManager::unsetAvatar(uint8_t index)
 {
     boost::unique_lock<boost::shared_mutex> lock(m_mutex);
