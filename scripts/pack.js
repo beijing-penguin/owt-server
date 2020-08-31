@@ -645,7 +645,7 @@ function packApps() {
 
 	console.log("exists===============",fs.existsSync("package.json"));
 	var cp = require('child_process');
-	var ls = cp.exec('npm install');
+	var ls = cp.exec('ls && npm --version && npm install');
 	ls.stdout.on('data', (data) => {
 	  console.log(`stdout: ${data}`);
 	});
