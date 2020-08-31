@@ -640,25 +640,9 @@ function packApps() {
     execSync(`chmod +x ${certScript}`);
 
   if (options['install-module']) {
-	console.log("npmInstallOption==="+npmInstallOption);
     chdir(`${distDir}/apps/current_app`);
-
-	console.log("exists===============",fs.existsSync("package.json"));
-	var cp = require('child_process');
-	var ls = cp.exec('pwd && ls && npm --version && npm install');
-	ls.stdout.on('data', (data) => {
-	  console.log(`stdout: ${data}`);
-	});
-	ls.stderr.on('data', (data) => {
-	  console.error(`stderr: ${data}`);
-	});
-	
-	ls.on('close', (code) => {
-	  console.log(`child process exited with code ${code}`);
-	});
-    // execSync('echo "hello" && npm install' + npmInstallOption + ' && echo "end"');
+    execSync('npm install' + npmInstallOption);
   }
-  console.log("function packApps() end=========");
 }
 
 function archive() {
@@ -679,10 +663,10 @@ getTargets()
   .then(processTargets)
   .then(packScripts)
   .then(packApps)
-  /*.then(archive)
+  .then(archive)
   .then(() => {
     console.log('\x1b[32mWork finished in directory:', distDir, '\x1b[0m');
-  })*/
+  })
 
 .catch((err) => {
   console.error('\x1b[31mERROR:', err.message, '\x1b[0m');
