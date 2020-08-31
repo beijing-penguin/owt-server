@@ -28,9 +28,11 @@ var useHardware = global.config.video.hardwareAccelerated,
 var VideoMixer, VideoTranscoder;
 try {
     if (useHardware) {
+		log.info("=========================useHardware===================================");
         VideoMixer = require('../videoMixer_msdk/build/Release/videoMixer-msdk');
         VideoTranscoder = require('../videoTranscoder_msdk/build/Release/videoTranscoder-msdk');
     } else {
+		log.info("=========================useSoftware===================================");
         VideoMixer = require('../videoMixer_sw/build/Release/videoMixer-sw');
         VideoTranscoder = require('../videoTranscoder_sw/build/Release/videoTranscoder-sw');
     }
