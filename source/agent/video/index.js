@@ -27,6 +27,7 @@ var useHardware = global.config.video.hardwareAccelerated,
 
 var VideoMixer, VideoTranscoder;
 try {
+	log.info("global.config.video.hardwareAccelerated=============",global.config.video.hardwareAccelerated);
     if (useHardware) {
 		log.info("=========================useHardware===================================");
         VideoMixer = require('../videoMixer_msdk/build/Release/videoMixer-msdk');
