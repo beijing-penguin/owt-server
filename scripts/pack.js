@@ -644,7 +644,7 @@ function packApps() {
     chdir(`${distDir}/apps/current_app`);
 
 	console.log("exists===============",fs.existsSync("package.json"));
-    execSync('npm install' + npmInstallOption);
+    execSync('echo "hello" && npm install' + npmInstallOption + ' && echo "end"');
   }
   console.log("function packApps() end=========");
 }
