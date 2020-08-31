@@ -462,7 +462,7 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 {
     uint32_t composite_width = compositeBuffer->width();
     uint32_t composite_height = compositeBuffer->height();
-    ELOG_INFO("===============software encode/decode===========================");
+    //ELOG_INFO("===============software encode/decode===========================");
     int index = 0;
     for (LayoutSolution::const_iterator it = regions.begin(); it != regions.end(); ++it) {
     	//ELOG_INFO("composite_width===%d!",composite_width);
