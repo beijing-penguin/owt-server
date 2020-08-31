@@ -352,6 +352,7 @@ module.exports = function() {
             // 'linear', which means the broken connection will try to
             // recover after every 'reconnectBackoffTime' which is
             // 1000ms by default.
+			options.heartbeat = 8;
             var conn = amqp.createConnection(options);
             var connected = false;
             conn.on('ready', function() {

@@ -40,6 +40,7 @@ var exc;
 
 exports.connect = function (options) {
     var setupConnection = function(options) {
+		options.heartbeat = 8;
         connection = amqp.createConnection(options);
         connection.on('ready', function () {
             log.info('Connected to rabbitMQ server');
