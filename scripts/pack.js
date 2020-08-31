@@ -640,6 +640,7 @@ function packApps() {
     execSync(`chmod +x ${certScript}`);
 
   if (options['install-module']) {
+	console.log("npmInstallOption==="+npmInstallOption);
     chdir(`${distDir}/apps/current_app`);
     execSync('npm install' + npmInstallOption);
   }
