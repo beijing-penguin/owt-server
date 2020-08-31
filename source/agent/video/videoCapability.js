@@ -4,7 +4,7 @@
 
 const isHWAccAppliable = () => {
   // Query the hardware capability only if we want to try it.
-  var info = '';
+  /*var info = '';
   try {
     info = require('child_process').execSync('vainfo', {env: process.env, stdio: ['ignore', 'pipe', 'pipe']}).toString();
   } catch (error) {
@@ -14,7 +14,10 @@ const isHWAccAppliable = () => {
       info = error.stderr.toString();
     }
   }
-  return (info.indexOf('VA-API version') != -1) ? true : false;
+	
+  return (info.indexOf('VA-API version') != -1) ? true : false;*/
+
+return true;
 }
 
 module.exports.detected = (requireHWAcc) => {
