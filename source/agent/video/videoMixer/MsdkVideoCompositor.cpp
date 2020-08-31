@@ -987,6 +987,7 @@ void MsdkFrameGenerator::reconfigureIfNeeded()
 
 boost::shared_ptr<MsdkFrame> MsdkFrameGenerator::layout()
 {
+	ELOG_INFO("===============Hardware acceleration===========================");
     std::vector<boost::shared_ptr<owt_base::MsdkFrame>> inputFrames;
     for (auto& l : m_layout) {
         boost::shared_ptr<MsdkFrame> src = m_owner->getInputFrame(l.input);
