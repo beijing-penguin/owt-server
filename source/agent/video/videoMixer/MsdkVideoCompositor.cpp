@@ -136,10 +136,11 @@ bool MsdkAvatarManager::setAvatar(uint8_t index, const std::string &url)
     return true;
 }
 
-bool SoftVideoCompositor::setFramedrawtext(int input, const std::string& framedrawtext)
+bool MsdkAvatarManager::setFramedrawtext(uint8_t index, const std::string &framedrawtext)
 {
-	ELOG_INFO("setFramedrawtext========%s",framedrawtext.c_str());
-    return m_avatarManager->setFramedrawtext(input, framedrawtext);
+    boost::unique_lock<boost::shared_mutex> lock(m_mutex);
+    framedrawtext_inputs[index] = framedrawtext;
+    return true;
 }
 
 bool MsdkAvatarManager::unsetAvatar(uint8_t index)
@@ -180,6 +181,11 @@ boost::shared_ptr<owt_base::MsdkFrame> MsdkAvatarManager::getAvatarFrame(uint8_t
     boost::shared_ptr<owt_base::MsdkFrame> frame = loadImage(it->second);
     m_frames[it->second] = frame;
     return frame;
+}
+
+std::string MsdkAvatarManager::getMyFramedrawtext(uint8_t index)
+{
+    return framedrawtext_inputs[index];
 }
 
 DEFINE_LOGGER(MsdkInput, "mcu.media.MsdkVideoCompositor.MsdkInput");
@@ -1112,6 +1118,12 @@ bool MsdkVideoCompositor::setAvatar(int input, const std::string& avatar)
     ELOG_DEBUG("setAvatar(%d) = %s", input, avatar.c_str());
 
     return m_avatarManager->setAvatar(input, avatar);
+}
+
+bool MsdkVideoCompositor::setFramedrawtext(int input, const std::string& framedrawtext)
+{
+	ELOG_INFO("setFramedrawtext========%s",framedrawtext.c_str());
+    return m_avatarManager->setFramedrawtext(input, framedrawtext);
 }
 
 bool MsdkVideoCompositor::unsetAvatar(int input)

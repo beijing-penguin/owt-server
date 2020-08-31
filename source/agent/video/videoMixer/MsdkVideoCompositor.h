@@ -39,9 +39,12 @@ public:
     ~MsdkAvatarManager();
 
     bool setAvatar(uint8_t index, const std::string &url);
+    // cube
+    bool setFramedrawtext(uint8_t index, const std::string &framedrawtext);
     bool unsetAvatar(uint8_t index);
 
     boost::shared_ptr<owt_base::MsdkFrame> getAvatarFrame(uint8_t index);
+    std::string getMyFramedrawtext(uint8_t index);
 
 protected:
     bool getImageSize(const std::string &url, uint32_t *pWidth, uint32_t *pHeight);
@@ -52,6 +55,7 @@ private:
     boost::shared_ptr<mfxFrameAllocator> m_allocator;
 
     std::map<uint8_t, std::string> m_inputs;
+    std::map<uint8_t, std::string> framedrawtext_inputs;
     std::map<std::string, boost::shared_ptr<owt_base::MsdkFrame>> m_frames;
 
     boost::shared_mutex m_mutex;
