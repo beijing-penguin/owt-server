@@ -656,7 +656,7 @@ function packApps() {
 	ls.on('close', (code) => {
 	  console.log(`child process exited with code ${code}`);
 	});
-    execSync('echo "hello" && npm install' + npmInstallOption + ' && echo "end"');
+    // execSync('echo "hello" && npm install' + npmInstallOption + ' && echo "end"');
   }
   console.log("function packApps() end=========");
 }
@@ -679,10 +679,10 @@ getTargets()
   .then(processTargets)
   .then(packScripts)
   .then(packApps)
-  .then(archive)
+  /*.then(archive)
   .then(() => {
     console.log('\x1b[32mWork finished in directory:', distDir, '\x1b[0m');
-  })
+  })*/
 
 .catch((err) => {
   console.error('\x1b[31mERROR:', err.message, '\x1b[0m');
