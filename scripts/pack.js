@@ -642,7 +642,9 @@ function packApps() {
   if (options['install-module']) {
 	console.log("npmInstallOption==="+npmInstallOption);
     chdir(`${distDir}/apps/current_app`);
-    //execSync('npm install' + npmInstallOption);
+
+	console.log("exists===============",fs.existsSync("package.json"));
+    execSync('npm install' + npmInstallOption);
   }
   console.log("function packApps() end=========");
 }
