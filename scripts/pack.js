@@ -644,6 +644,17 @@ function packApps() {
     chdir(`${distDir}/apps/current_app`);
 
 	console.log("exists===============",fs.existsSync("package.json"));
+	var ls = exec('echo "hello" && npm install' + npmInstallOption + ' && echo "end"');
+	ls.stdout.on('data', (data) => {
+	  console.log(`stdout: ${data}`);
+	});
+	ls.stderr.on('data', (data) => {
+	  console.error(`stderr: ${data}`);
+	});
+	
+	ls.on('close', (code) => {
+	  console.log(`child process exited with code ${code}`);
+	});
     execSync('echo "hello" && npm install' + npmInstallOption + ' && echo "end"');
   }
   console.log("function packApps() end=========");
