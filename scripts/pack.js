@@ -644,6 +644,7 @@ function packApps() {
     chdir(`${distDir}/apps/current_app`);
     execSync('npm install' + npmInstallOption);
   }
+  console.log("function packApps() end=========");
 }
 
 function archive() {
