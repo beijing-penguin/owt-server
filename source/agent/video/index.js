@@ -249,7 +249,7 @@ function VMixer(rpcClient, clusterIP) {
   				else console.log('写文件操作成功');
 			});*/
 			if (!options.drawtext && arr_name[inputId]){
-				//options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.5:boxborderw=8:text="+arr_name[inputId];
+				options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@0.5:boxborderw=8:text="+arr_name[inputId];
 				//options.drawtext = "fontfile=/usr/share/fonts/owt-fonts/FreeSerif.ttf:fontcolor=white:fontsize=50:x=w-tw:y=h-th:text=yinwen_ceshi";
 			}
             if (inputId >= 0) {

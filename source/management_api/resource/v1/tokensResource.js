@@ -41,7 +41,8 @@ var getTokenString = function (id, token) {
     return dataAccess.token.key().then(function(serverKey) {
         var toSign = id + ',' + token.host,
             hex = crypto.createHmac('sha256', serverKey).update(toSign).digest('hex'),
-            signed = (new Buffer(hex)).toString('base64'),
+            //signed = (new Buffer(hex)).toString('base64'),
+            signed = Buffer.from(hex, 'base64').toString(),
 
             tokenJ = {
                 tokenId: id,
@@ -49,7 +50,8 @@ var getTokenString = function (id, token) {
                 secure: token.secure,
                 signature: signed
             },
-            tokenS = (new Buffer(JSON.stringify(tokenJ))).toString('base64');
+            //tokenS = (new Buffer(JSON.stringify(tokenJ))).toString('base64');
+            tokenS = Buffer.from(JSON.stringify(tokenJ), 'base64').toString();
 
         return tokenS;
 
