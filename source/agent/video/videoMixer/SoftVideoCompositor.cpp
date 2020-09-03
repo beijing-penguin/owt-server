@@ -483,60 +483,60 @@ void SoftFrameGenerator::layout_regions(SoftFrameGenerator *t, rtc::scoped_refpt
 //        char suffix[50] = ".drawtext";
 //        sprintf(drawtext_dir,"./drawtext/%d%s",it->input,suffix);
 
-		std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
-		if(framedrawtext != "null"){
-
-			webrtc::VideoFrame new_compositeFrame(
-							inputBuffer,
-							webrtc::kVideoRotation_0,
-							t->m_clock->TimeInMilliseconds()
-							);
-			new_compositeFrame.set_timestamp(new_compositeFrame.timestamp_us() * t->kMsToRtpTimestamp);
-
-			owt_base::Frame frame;
-			memset(&frame, 0, sizeof(frame));
-			frame.format = owt_base::FRAME_FORMAT_I420;
-			frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
-			frame.length = 0; // unused.
-			frame.timeStamp = new_compositeFrame.timestamp();
-			frame.additionalInfo.video.width = composite_width;
-			frame.additionalInfo.video.height = composite_height;
-			//ELOG_INFO("frame.additionalInfo.video.width====%d",composite_width);
-			//ELOG_INFO("frame.additionalInfo.video.height====%d",composite_height);
-
-			t->m_markTextDrawer->setText(framedrawtext);
-			t->m_markTextDrawer->enable(true);
-
-			t->m_markTextDrawer->drawFrame(frame);
-
-//			rtc::scoped_refptr<webrtc::VideoFrameBuffer> gen_compositeBuffer = t->generateFrame();
-//			if (gen_compositeBuffer) {
-//				inputBuffer = gen_compositeBuffer;
-//				webrtc::VideoFrame gen_compositeFrame(
-//						gen_compositeBuffer,
-//						webrtc::kVideoRotation_0,
-//						t->m_clock->TimeInMilliseconds()
-//						);
-//				gen_compositeFrame.set_timestamp(gen_compositeFrame.timestamp_us() * t->kMsToRtpTimestamp);
+//		std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
+//		if(framedrawtext != "null"){
 //
-//				owt_base::Frame frame;
-//				memset(&frame, 0, sizeof(frame));
-//				frame.format = owt_base::FRAME_FORMAT_I420;
-//				frame.payload = reinterpret_cast<uint8_t*>(&gen_compositeFrame);
-//				frame.length = 0; // unused.
-//				frame.timeStamp = gen_compositeFrame.timestamp();
-//				frame.additionalInfo.video.width = composite_width;
-//				frame.additionalInfo.video.height = composite_height;
+//			webrtc::VideoFrame new_compositeFrame(
+//							inputBuffer,
+//							webrtc::kVideoRotation_0,
+//							t->m_clock->TimeInMilliseconds()
+//							);
+//			new_compositeFrame.set_timestamp(new_compositeFrame.timestamp_us() * t->kMsToRtpTimestamp);
 //
-//				t->m_markTextDrawer->setText(framedrawtext);
-//				t->m_markTextDrawer->enable(true);
+//			owt_base::Frame frame;
+//			memset(&frame, 0, sizeof(frame));
+//			frame.format = owt_base::FRAME_FORMAT_I420;
+//			frame.payload = reinterpret_cast<uint8_t*>(&new_compositeFrame);
+//			frame.length = 0; // unused.
+//			frame.timeStamp = new_compositeFrame.timestamp();
+//			frame.additionalInfo.video.width = composite_width;
+//			frame.additionalInfo.video.height = composite_height;
+//			//ELOG_INFO("frame.additionalInfo.video.width====%d",composite_width);
+//			//ELOG_INFO("frame.additionalInfo.video.height====%d",composite_height);
 //
-//				t->m_markTextDrawer->drawFrame(frame);
-//				for (auto itt = t->m_outputs[it->input].begin(); itt != t->m_outputs[it->input].end(); ++itt) {
-//					itt->dest->onFrame(frame);
-//				}
-//			}
-		}
+//			t->m_markTextDrawer->setText(framedrawtext);
+//			t->m_markTextDrawer->enable(true);
+//
+//			t->m_markTextDrawer->drawFrame(frame);
+//
+////			rtc::scoped_refptr<webrtc::VideoFrameBuffer> gen_compositeBuffer = t->generateFrame();
+////			if (gen_compositeBuffer) {
+////				inputBuffer = gen_compositeBuffer;
+////				webrtc::VideoFrame gen_compositeFrame(
+////						gen_compositeBuffer,
+////						webrtc::kVideoRotation_0,
+////						t->m_clock->TimeInMilliseconds()
+////						);
+////				gen_compositeFrame.set_timestamp(gen_compositeFrame.timestamp_us() * t->kMsToRtpTimestamp);
+////
+////				owt_base::Frame frame;
+////				memset(&frame, 0, sizeof(frame));
+////				frame.format = owt_base::FRAME_FORMAT_I420;
+////				frame.payload = reinterpret_cast<uint8_t*>(&gen_compositeFrame);
+////				frame.length = 0; // unused.
+////				frame.timeStamp = gen_compositeFrame.timestamp();
+////				frame.additionalInfo.video.width = composite_width;
+////				frame.additionalInfo.video.height = composite_height;
+////
+////				t->m_markTextDrawer->setText(framedrawtext);
+////				t->m_markTextDrawer->enable(true);
+////
+////				t->m_markTextDrawer->drawFrame(frame);
+////				for (auto itt = t->m_outputs[it->input].begin(); itt != t->m_outputs[it->input].end(); ++itt) {
+////					itt->dest->onFrame(frame);
+////				}
+////			}
+//		}
 
         //std::string framedrawtext = t->m_owner->m_avatarManager->getMyFramedrawtext(it->input);
 
