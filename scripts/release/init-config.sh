@@ -7,14 +7,14 @@ if [ ! -n "$1" ];then
 fi
 
 bin=`dirname "$0"`
-echo $bin
+echo "bin="$bin
 bin=`cd "$bin"; pwd`
-echo $bin
+echo "bin="$bin
 ROOT=`cd "${bin}/.."; pwd`
-echo $ROOT
+echo "ROOT="$ROOT
 
 config_dir=$ROOT/dist_config/$1
-echo $config_dir
+echo "config_dir="$config_dir
 
 for element in `ls $config_dir`
 do
