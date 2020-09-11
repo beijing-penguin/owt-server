@@ -13,3 +13,5 @@ usage()
 {
   echo "Usage: [--deps] [--hardware] (Default: without deps and hardware)"
 }
+
+echo $1
