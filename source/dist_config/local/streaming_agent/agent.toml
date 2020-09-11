@@ -25,8 +25,6 @@ network_max_scale = 1000 #unit: Mbps
 [rabbit]
 host = "127.0.0.1" #default: "localhost"
 port = 5672 #default: 5672
-login = "owt"
-password= "owt"
 
 
 [internal]
