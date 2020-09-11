@@ -15,3 +15,9 @@ usage()
 }
 
 echo $1
+config_dir=$ROOT/dist_config/$1
+
+for element in `ls $config_dir`
+do  
+	echo $element
+done
