@@ -9,13 +9,9 @@ bin=`cd "$bin"; pwd`
 echo $bin
 ROOT=`cd "${bin}/.."; pwd`
 echo $ROOT
-usage()
-{
-  echo "Usage: [--deps] [--hardware] (Default: without deps and hardware)"
-}
 
-echo $1
 config_dir=$ROOT/dist_config/$1
+echo $config_dir
 
 for element in `ls $config_dir`
 do  
