@@ -669,6 +669,9 @@ function copyDir() {
 	
 	execSync(`cp -r ${rootDir}/source/owt-fonts ${distDir}`);
 	console.log(`\x1b[32mcp -r ${rootDir}/source/owt-fonts ${distDir}\x1b[0m`);
+	
+	
+	execSync(`tar -zxvf ${rootDir}/source/ffmpeg_libfdkaac_lib.tgz -C ${rootDir}/source`);
 }
 
 getTargets()
