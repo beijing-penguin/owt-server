@@ -13,11 +13,11 @@ echo "bin="$bin
 ROOT=`cd "${bin}/.."; pwd`
 echo "ROOT="$ROOT
 
-config_dir=$ROOT/dist_config/$1
+config_dir=$ROOT/../dist_config/$1
 echo "config_dir="$config_dir
 
 for element in `ls $config_dir`
 do
-	echo "cp -r $config_dir/../* $ROOT/$element"
-	cp -r $config_dir/../$element/* $ROOT/$element
+	echo "cp -r $config_dir/$element/* $ROOT/$element"
+	cp -r $config_dir/$element/* $ROOT/$element
 done
