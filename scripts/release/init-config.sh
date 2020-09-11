@@ -16,5 +16,5 @@ echo $config_dir
 for element in `ls $config_dir`
 do
 	echo "cp -r $config_dir/* $ROOT/$element"
-	cp -r $config_dir/* $ROOT/$element
+	cp -r $config_dir/$element/* $ROOT/$element
 done
