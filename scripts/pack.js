@@ -669,6 +669,11 @@ function copyDir() {
 	
 	execSync(`cp -r ${rootDir}/source/owt-fonts ${distDir}`);
 	console.log(`\x1b[32mcp -r ${rootDir}/source/owt-fonts ${distDir}\x1b[0m`);
+	
+	//console.log(`\x1b[32maac pack!!!\x1b[0m`);
+	//execSync(`cp -r ${rootDir}/source/owt-fonts ${distDir}`);
+	execSync(`mv ${distDir}/audio_agent/lib ${distDir}/audio_agent/lib_bak`);
+	console.log(`\x1b[32mmv ${distDir}/audio_agent/lib ${distDir}/audio_agent/lib_bak\x1b[0m`);
 }
 
 getTargets()
