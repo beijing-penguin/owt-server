@@ -32,7 +32,7 @@ regions = [] #default: [], which means all regions.
 
 
 [rabbit]
-host = "127.0.0.1" #default: "localhost"
+host = "localhost" #default: "localhost"
 port = 5672 #default: 5672
 
 [internal]
