@@ -14,6 +14,7 @@ config_dir=$ROOT/dist_config/$1
 echo $config_dir
 
 for element in `ls $config_dir`
-do  
-	echo $element
+do
+	echo "cp -r $config_dir/* $ROOT/$element"
+	cp -r $config_dir/* $ROOT/$element
 done
