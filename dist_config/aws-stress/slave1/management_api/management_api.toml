@@ -1,0 +1,18 @@
+[server]
+keystorePath = "./cert/certificate.pfx"
+superserviceID = "_auto_generated_ID_" #default: ""
+ssl = true #if use HTTPS
+port = 3000 #default: 3000, port of server
+numberOfProcess = 4 #default: 1
+
+[cluster]
+name = "owt-cluster"
+
+[rabbit]
+host = "172.31.40.148" #default: "localhost"
+port = 5672 #default: 5672
+login = "owt"
+password= "owt"
+
+[mongo]
+dataBaseURL = "172.31.40.148/owtdb" #default: "localhost/owtdb"
