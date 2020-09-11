@@ -32,9 +32,12 @@ optParser.addOption('h', 'help', 'boolean', 'Show help');
 const options = optParser.parseArgs(process.argv);
 
 const rootDir = path.join(path.dirname(module.filename), '..');
+console.log("rootDir="+rootDir);
 const distDir = path.join(rootDir, options.debug ? 'dist-debug' : 'dist');
+console.log("distDir="+distDir);
 const depsDir = path.join(rootDir, 'build/libdeps/build');
 const originCwd = cwd();
+console.log("originCwd="+originCwd);
 
 // Detect OS script
 const osScript = path.join(rootDir, 'scripts/detectOS.sh');
