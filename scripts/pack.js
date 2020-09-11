@@ -568,6 +568,9 @@ function packScripts() {
   execSync(`rm -rf ${binDir}`);
   execSync(`mkdir -p ${binDir}`);
 
+  execSync(`cp -r ${rootDir}/scripts/release/init-config.sh ${binDir}`);
+  console.log(`\x1b[32mcp -r ${rootDir}/scripts/release/init-config.sh ${distDir}/bin\x1b[0m`);
+
   execSync(`cp -a ${rootDir}/scripts/detectOS.sh ${binDir}`);
   execSync(`cp -a ${rootDir}/scripts/release/init-all.sh ${binDir}`);
   execSync(`cp -a ${rootDir}/scripts/release/install_node.sh ${binDir}`);
@@ -666,9 +669,6 @@ function copyDir() {
 	
 	execSync(`cp -r ${rootDir}/source/owt-fonts ${distDir}`);
 	console.log(`\x1b[32mcp -r ${rootDir}/source/owt-fonts ${distDir}\x1b[0m`);
-	
-	execSync(`cp -r ${rootDir}/scripts/release/init-config.sh ${distDir}/bin`);
-	console.log(`\x1b[32mcp -r ${rootDir}/scripts/release/init-config.sh ${distDir}/bin\x1b[0m`);
 }
 
 getTargets()
