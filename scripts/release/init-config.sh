@@ -2,7 +2,7 @@
 
 
 if [ ! -n "$1" ];then
-    echo "please set env like this './init-config local'"
+    echo "please set config variable like this './init-config local'"
     exit 1
 fi
 
