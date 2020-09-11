@@ -660,6 +660,11 @@ function archive() {
   console.log(`\x1b[32mRelease-${myVersion}.tgz generated in ${rootDir}.\x1b[0m`);
 }
 
+function copyDir() {
+	execSync(`cp -r ${rootDir}/source/dist_config ${distDir}`);
+	console.log(`\x1b[32mcp -r ${rootDir}/source/dist_config ${distDir}\x1b[0m`);
+}
+
 getTargets()
   .then(getPackList)
   .then(cleanIfRepack)
@@ -667,6 +672,7 @@ getTargets()
   .then(packScripts)
   .then(packApps)
   .then(archive)
+  .then(copyDir)
   .then(() => {
     console.log('\x1b[32mWork finished in directory:', distDir, '\x1b[0m');
   })
