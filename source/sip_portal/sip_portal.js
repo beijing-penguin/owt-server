@@ -123,7 +123,9 @@ function initSipRooms() {
                 var sipInfo = rooms[index].sip;
                 // Save the room sip info
                 roomInfo[room_id] = sipInfo;
-                createSipConnectivity(room_id, sipInfo.sipServer, sipInfo.username, sipInfo.password);
+				if(sipInfo.sipServer){
+                	createSipConnectivity(room_id, sipInfo.sipServer, sipInfo.username, sipInfo.password);
+				}
             }
             log.info('initSipRooms ok');
         });
