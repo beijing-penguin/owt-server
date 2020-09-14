@@ -495,7 +495,6 @@ module.exports.create = function (spec, on_init_ok, on_init_failed) {
                 }
                 var publisher = (terminals[stream_owner] ? terminals[stream_owner].owner : 'common');
 				var drawtext = null;
-				//streams[stream_id].drawtext = "fontfile=/usr/share/fonts/gnu-free/MSYHBD.TTC:fontcolor=white:fontsize=50:x=w-tw:y=h-th:box=1:boxcolor=black@1:boxborderw=8:text=测试";
 				if(streams[stream_id].hasOwnProperty("drawtext")){
 					drawtext = streams[stream_id].drawtext;
 				}
