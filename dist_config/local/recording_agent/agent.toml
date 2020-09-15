@@ -38,5 +38,5 @@ minport = 0 #default: 0
 
 #The storage availability of the recording path needs to be guaranteed when using media recording.
 [recording]
-path = "/tmp"
+path = "/root/owt/recording-tmp"
 initialize_timeout = 3000 #default: 3000
