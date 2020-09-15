@@ -47,6 +47,9 @@ module.exports.load = () => {
     config.recording = config.recording || {};
     config.recording.initializeTimeout = config.recording.initialize_timeout || 3000;
     config.recording.path = config.recording.path || '/tmp'
+	if (!fs.existsSync(config.recording.path)){
+		fs.mkdirSync(config.recording.path);
+	}
     try {
       fs.accessSync(config.recording.path, fs.F_OK);
     } catch (e) {
